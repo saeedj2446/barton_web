@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import HeroSection from "./home/HeroSection";
-import StatsSection from "./home/StatsSection";
-import CategoryShowcase from "./home/CategoryShowcase";
-import ProductRecommendations from "./home/ProductRecommendations";
-import VipSellers from "./home/VipSellers";
-import BuyingRequests from "./home/BuyingRequests";
-import TrustSection from "./home/TrustSection";
+import HeroSection from "@/app/home/components/HeroSection";
+import StatsSection from "@/app/home/components/StatsSection";
+import CategoryShowcase from "@/app/home/components/CategoryShowcase";
+import ProductRecommendations from "@/app/home/components/ProductRecommendations";
+import VipSellers from "@/app/home/components/VipSellers";
+import BuyingRequests from "@/app/home/components/BuyingRequests";
+import TrustSection from "@/app/home/components/TrustSection";
 
 interface Language {
   name: string;

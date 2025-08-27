@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { RefreshCw, Wifi, WifiOff } from "lucide-react";
-import { AddTaskModal } from "../../components/task-manager/add-task-modal";
-import { TaskFilters } from "../../components/task-manager/task-filters";
-import { TaskList } from "../../components/task-manager/task-list";
-import { TaskStats } from "../../components/task-manager/task-stats";
+import { AddTaskModal } from "./components/add-task-modal";
+import { TaskFilters } from "./components/task-filters";
+import { TaskList } from "./components/task-list";
+import { TaskStats } from "./components/task-stats";
 import { Button } from "../../components/ui/button";
 import { ThemeToggle } from "../../components/ui/theme-toggle";
 import { useAppSelector, useAppDispatch } from "../../lib/hooks/redux";

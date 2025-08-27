@@ -4,9 +4,10 @@ import type { ReactNode } from "react"
 import { Provider } from "react-redux"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import { store } from "../../lib/store/store"
 import { Toaster } from "../ui/toaster"
-import { ThemeProvider } from "../theme-provider"
+
+import {store} from "@/lib/store/store";
+import {ThemeProvider} from "next-themes";
 
 // Create a client
 const queryClient = new QueryClient({
