@@ -1,13 +1,11 @@
-"use client";
-
 import React, { useState } from "react";
-import HeroSection from "./home/HeroSection";
-import StatsSection from "./home/StatsSection";
-import CategoryShowcase from "./home/CategoryShowcase";
-import ProductRecommendations from "./home/ProductRecommendations";
-import VipSellers from "./home/VipSellers";
-import BuyingRequests from "./home/BuyingRequests";
-import TrustSection from "./home/TrustSection";
+import HeroSection from "./HeroSection";
+import StatsSection from "./StatsSection";
+import CategoryShowcase from "./CategoryShowcase";
+import ProductRecommendations from "./ProductRecommendations";
+import VipSellers from "./VipSellers";
+import BuyingRequests from "./BuyingRequests";
+import { default as TrustSection } from "./TrustSection";
 
 interface Language {
   name: string;
@@ -15,7 +13,7 @@ interface Language {
   direction: "ltr" | "rtl";
 }
 
-export default function HomePage() {
+const HomePage = () => {
   const [currentLanguage, setCurrentLanguage] = useState<Language>({
     name: "English",
     code: "en",
@@ -266,4 +264,6 @@ export default function HomePage() {
       </footer>
     </div>
   );
-}
+};
+
+export default HomePage;
