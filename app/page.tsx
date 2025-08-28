@@ -17,9 +17,9 @@ interface Language {
 
 export default function HomePage() {
   const [currentLanguage, setCurrentLanguage] = useState<Language>({
-    name: "English",
-    code: "en",
-    direction: "ltr",
+    name: "فارسی",
+    code: "fa",
+    direction: "rtl",
   });
 
   const translations = {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Search, Globe, ChevronDown } from "lucide-react";
+import Link from "next/link";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import {
@@ -154,9 +155,11 @@ const HeroSection = ({
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant="ghost" className="text-white hover:bg-blue-700">
-              {t.signIn}
-            </Button>
+            <Link href="/login">
+              <Button variant="ghost" className="text-white hover:bg-blue-700">
+                {t.signIn}
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
