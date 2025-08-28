@@ -155,6 +155,15 @@ const HeroSection = ({
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+            <Link href="/user-panel">
+              <Button variant="ghost" className="text-white hover:bg-blue-700">
+                {currentLanguage.code === "fa"
+                  ? "پنل من"
+                  : currentLanguage.code === "ar"
+                    ? "لوحتي"
+                    : "My Panel"}
+              </Button>
+            </Link>
             <Link href="/login">
               <Button variant="ghost" className="text-white hover:bg-blue-700">
                 {t.signIn}
