@@ -152,3 +152,119 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   @apply bg-muted-foreground/50;
 }
+
+/* Sell Ad Modal Styles */
+.sell-ad-form {
+  @apply space-y-6;
+}
+
+.sell-ad-form .form-field {
+  @apply space-y-3;
+}
+
+.sell-ad-form .form-label {
+  @apply text-sm font-medium text-foreground mb-2 block;
+}
+
+.sell-ad-form .form-input {
+  @apply h-11 transition-all duration-200;
+}
+
+.sell-ad-form .form-textarea {
+  @apply min-h-[120px] resize-none transition-all duration-200;
+}
+
+.sell-ad-step-indicator {
+  @apply flex items-center justify-center mb-8;
+}
+
+.sell-ad-step-number {
+  @apply w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300;
+}
+
+.sell-ad-step-connector {
+  @apply w-16 h-1 mx-3 rounded-full transition-all duration-300;
+}
+
+/* Enhanced form spacing */
+[data-slot="form-item"] {
+  @apply space-y-3;
+}
+
+[data-slot="form-label"] {
+  @apply text-sm font-medium text-foreground;
+}
+
+/* Modal animations */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-content {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Sell Ad Modal Styles */
+.sell-ad-form {
+  @apply space-y-6;
+}
+
+.sell-ad-form .form-field {
+  @apply space-y-3;
+}
+
+.sell-ad-form .form-label {
+  @apply text-sm font-medium text-foreground mb-2 block;
+}
+
+.sell-ad-form .form-input {
+  @apply h-11 transition-all duration-200;
+}
+
+.sell-ad-form .form-textarea {
+  @apply min-h-[120px] resize-none transition-all duration-200;
+}
+
+.sell-ad-step-indicator {
+  @apply flex items-center justify-center mb-8;
+}
+
+.sell-ad-step-number {
+  @apply w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300;
+}
+
+.sell-ad-step-connector {
+  @apply w-16 h-1 mx-3 rounded-full transition-all duration-300;
+}
+
+/* Enhanced form spacing */
+[data-slot="form-item"] {
+  @apply space-y-3;
+}
+
+[data-slot="form-label"] {
+  @apply text-sm font-medium text-foreground;
+}
+
+/* Modal animations */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-content {
+  animation: modalSlideIn 0.3s ease-out;
+}

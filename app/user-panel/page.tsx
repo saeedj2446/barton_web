@@ -5,6 +5,8 @@ import ProfileSidebar from "./components/ProfileSidebar";
 import ProfileDashboard from "./components/ProfileDashboard";
 import UserPanelHeader from "./components/UserPanelHeader";
 import CreateProfilePage from "./components/CreateProfilePage";
+import { CreateSellAdModal } from "./components/sell-ad/CreateSellAdModal";
+import { CreateBuyRequestModal } from "./components/buy-request/CreateBuyRequestModal";
 
 interface Language {
   name: string;
@@ -35,6 +37,8 @@ export default function UserPanel() {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showCreateProfile, setShowCreateProfile] = useState(false);
+  const [showCreateSellAd, setShowCreateSellAd] = useState(false);
+  const [showCreateBuyRequest, setShowCreateBuyRequest] = useState(false);
 
   const languages: Language[] = [
     { name: "English", code: "en", direction: "ltr" },
@@ -180,6 +184,14 @@ export default function UserPanel() {
     setShowCreateProfile(false);
   };
 
+  const handleCreateSellAd = () => {
+    setShowCreateSellAd(true);
+  };
+
+  const handleCreateBuyRequest = () => {
+    setShowCreateBuyRequest(true);
+  };
+
   return (
     <div
       className={`min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
@@ -213,6 +225,8 @@ export default function UserPanel() {
               selectedProfile={selectedProfile}
               currentLanguage={currentLanguage}
               translations={t}
+              onCreateSellAd={handleCreateSellAd}
+              onCreateBuyRequest={handleCreateBuyRequest}
             />
           </div>
         </div>
@@ -226,6 +240,18 @@ export default function UserPanel() {
           translations={t}
         />
       )}
+
+      <CreateSellAdModal
+        open={showCreateSellAd}
+        onOpenChange={setShowCreateSellAd}
+        currentLanguage={currentLanguage}
+      />
+
+      <CreateBuyRequestModal
+        open={showCreateBuyRequest}
+        onOpenChange={setShowCreateBuyRequest}
+        currentLanguage={currentLanguage}
+      />
     </div>
   );
 }

@@ -27,14 +27,18 @@ interface Profile {
 
 interface ProfileDashboardProps {
   selectedProfile: Profile | null;
-  currentLanguage: { direction: "ltr" | "rtl" };
+  currentLanguage: { direction: "ltr" | "rtl"; code: string };
   translations: any;
+  onCreateSellAd?: () => void;
+  onCreateBuyRequest?: () => void;
 }
 
 export default function ProfileDashboard({
   selectedProfile,
   currentLanguage,
   translations: t,
+  onCreateSellAd,
+  onCreateBuyRequest,
 }: ProfileDashboardProps) {
   const StatCard = ({ icon, title, value, subtitle }: any) => (
     <Card className="hover:shadow-lg transition-all duration-300 bg-white border-0 shadow-md">
@@ -56,7 +60,10 @@ export default function ProfileDashboard({
   );
 
   const QuickActionCard = ({ icon, title, description, onClick }: any) => (
-    <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 bg-white border-0 shadow-md">
+    <Card
+      className="cursor-pointer hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 bg-white border-0 shadow-md"
+      onClick={onClick}
+    >
       <CardContent className="p-6 text-center">
         <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
           {icon}
@@ -140,21 +147,25 @@ export default function ProfileDashboard({
             icon={<Plus className="w-6 h-6 text-green-600" />}
             title={t.createSellAd}
             description="ثبت آگهی فروش محصولات"
+            onClick={onCreateSellAd}
           />
           <QuickActionCard
             icon={<ShoppingCart className="w-6 h-6 text-blue-600" />}
             title={t.createBuyRequest}
             description="ثبت درخواست خرید کالا"
+            onClick={onCreateBuyRequest}
           />
           <QuickActionCard
             icon={<Package className="w-6 h-6 text-purple-600" />}
             title={t.manageProducts}
             description="مدیریت کالاها و موجودی"
+            onClick={() => (window.location.href = "/user-panel/products")}
           />
           <QuickActionCard
             icon={<FileText className="w-6 h-6 text-orange-600" />}
             title={t.viewOrders}
             description="مشاهده و پیگیری سفارش‌ها"
+            onClick={() => (window.location.href = "/user-panel/orders")}
           />
         </div>
       </div>
