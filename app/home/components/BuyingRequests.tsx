@@ -153,9 +153,16 @@ const BuyingRequests = ({
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.title}</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
             {t.subtitle}
           </p>
+          <a href="/buying-requests">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">
+              {currentLanguage.code === "fa"
+                ? "مشاهده همه درخواست‌ها"
+                : "View All Requests"}
+            </Button>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
