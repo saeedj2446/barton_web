@@ -16,6 +16,7 @@
 
 body {
   font-family: "iransans", sans-serif !important;
+  font-size: 14px;
 }
 
 @tailwind base;
@@ -84,6 +85,19 @@ body {
   body {
     @apply bg-background text-foreground;
     font-family: "iransans !important", sans-serif;
+    font-size: 14px;
+  }
+  h1 {
+    @apply text-xl;
+  }
+  h2 {
+    @apply text-lg;
+  }
+  h3 {
+    @apply text-base;
+  }
+  h4 {
+    @apply text-sm;
   }
 }
 

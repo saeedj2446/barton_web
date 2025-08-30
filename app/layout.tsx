@@ -21,7 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     // اینجا کلاس‌های Geist رو برای استفاده‌های خاص نگه می‌داریم
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html
+      lang="fa"
+      dir="rtl"
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
       <Script src="https://api.tempo.build/proxy-asset?url=https://storage.googleapis.com/tempo-public-assets/error-handling.js" />
       <body>
         <AppProviders>{children}</AppProviders>

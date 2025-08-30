@@ -72,9 +72,10 @@ const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
           {categories.map((category) => (
-            <div
+            <a
               key={category.id}
-              className="cursor-pointer transform hover:-translate-y-1 transition-transform duration-200"
+              href={`/products?category=${encodeURIComponent(category.name)}`}
+              className="cursor-pointer transform hover:-translate-y-1 transition-transform duration-200 block"
             >
               <Card className="overflow-hidden h-full border-none shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="relative h-40 overflow-hidden">
@@ -91,7 +92,7 @@ const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({
                   </p>
                 </CardContent>
               </Card>
-            </div>
+            </a>
           ))}
         </div>
 
