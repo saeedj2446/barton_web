@@ -36,7 +36,7 @@ const HeroSection = ({
   const translations = {
     en: {
       connect: "Connect with Global",
-      wholesale: "Wholesale Partners",
+
       discover:
         "Discover thousands of verified suppliers and buyers in your industry",
       searchPlaceholder: "Search products, suppliers, or categories...",
@@ -50,9 +50,8 @@ const HeroSection = ({
       signIn: "Sign In",
     },
     fa: {
-      connect: "ارتباط با شرکای",
-      wholesale: "عمده فروشی جهانی",
-      discover: "هزاران تامین کننده و خریدار تایید شده در صنعت خود را کشف کنید",
+      connect: "بازار عمده فروشی جهانی و محلی",
+      discover: "ما شما را به مشتریان و تامین کنندگان هدف وصل می کنیم",
       searchPlaceholder: "جستجوی محصولات، تامین کنندگان یا دسته بندی ها...",
       search: "جستجو",
       postSelling: "ثبت آگهی فروش",
@@ -65,7 +64,6 @@ const HeroSection = ({
     },
     ar: {
       connect: "تواصل مع شركاء",
-      wholesale: "الجملة العالميين",
       discover: "اكتشف آلاف الموردين والمشترين المعتمدين في صناعتك",
       searchPlaceholder: "البحث عن المنتجات أو الموردين أو الفئات...",
       search: "بحث",
@@ -175,10 +173,7 @@ const HeroSection = ({
       {/* Hero Content */}
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            {t.connect}
-            <span className="block text-yellow-300">{t.wholesale}</span>
-          </h2>
+          <h2 className="text-4xl md:text-6xl font-bold mb-6">{t.connect}</h2>
           <p className="text-xl md:text-2xl mb-8 text-blue-100">{t.discover}</p>
 
           {/* Search Bar */}
