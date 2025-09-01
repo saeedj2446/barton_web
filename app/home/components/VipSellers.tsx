@@ -99,7 +99,7 @@ const VipSellers = ({
 
   return (
     <div
-      className={`bg-gradient-to-br from-slate-50 to-blue-50 py-16 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
+      className={`py-1 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
       dir={currentLanguage.direction}
     >
       <div className="container mx-auto px-4">

@@ -81,11 +81,11 @@ export default function HomePage() {
       />
 
       {/* Statistics Section */}
-      <StatsSection currentLanguage={currentLanguage} />
+     {/* <StatsSection currentLanguage={currentLanguage} />*/}
 
       {/* Popular Categories Section */}
       <div className="container mx-auto px-4 py-12">
-        <CategoryShowcase />
+        <CategoryShowcase currentLanguage={currentLanguage}/>
       </div>
 
       {/* VIP Sellers Section */}
@@ -95,9 +95,9 @@ export default function HomePage() {
       <BuyingRequests currentLanguage={currentLanguage} />
 
       {/* Personalized Product Recommendations */}
-      <div className="bg-slate-50 py-12">
+      <div className="py-12">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
+          <h2 className="text-2xl font-bold text-center mb-8">
             {t.recommendedForYou}
           </h2>
           <ProductRecommendations />

@@ -50,9 +50,9 @@ const HeroSection = ({
       signIn: "Sign In",
     },
     fa: {
-      connect: "بازار عمده فروشی جهانی و محلی",
+      connect: "بازار خرید و فروش عمده",
       discover: "با بارتون به اصناف و مشتریان هدف وصل شوید.",
-      searchPlaceholder: "جستجوی محصولات، تامین کنندگان یا دسته بندی ها...",
+      searchPlaceholder: "جستجوی محصولات...",
       search: "جستجو",
       postSelling: "ثبت آگهی فروش",
       postBuying: "ثبت درخواست خرید",
@@ -106,7 +106,7 @@ const HeroSection = ({
           <div
             className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-8" : "space-x-8"}`}
           >
-            <h1 className="text-2xl font-bold">Barton</h1>
+            <h1 className="text-1xl font-bold">بارتون</h1>
             <nav
               className={`hidden md:flex ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-6" : "space-x-6"}`}
             >
@@ -171,30 +171,33 @@ const HeroSection = ({
         </div>
       </div>
       {/* Hero Content */}
-      <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
+      <div className="relative z-10 container mx-auto px-4 py-10 md:py-24">
         <div className="text-center max-w-3xl mx-auto">
           <h3 className="text-3xl md:text-3xl font-bold mb-6">{t.connect}</h3>
-          <p className="text-xl md:text-2xl mb-8 text-blue-100">{t.discover}</p>
+
 
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="mb-8">
             <div className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
               <div className="flex-1 relative">
                 <Search
-                  className={`absolute ${currentLanguage.direction === "rtl" ? "right-3" : "left-3"} top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5`}
+                    className={`absolute ${currentLanguage.direction === "rtl" ? "right-3" : "left-3"} top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5`}
                 />
                 <Input
-                  type="text"
-                  placeholder={t.searchPlaceholder}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`${currentLanguage.direction === "rtl" ? "pr-10" : "pl-10"} py-3 text-lg bg-white text-gray-900 border-0 focus:ring-2 focus:ring-yellow-400`}
+                    type="text"
+                    placeholder={t.searchPlaceholder}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className={`${currentLanguage.direction === "rtl" ? "pr-10" : "pl-10"} py-5 text-base bg-white text-gray-900 border-0 focus:ring-2 focus:ring-yellow-400`}
                 />
+
+
+
               </div>
               <Button
-                type="submit"
-                size="lg"
-                className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-semibold px-8 py-3"
+                  type="submit"
+                  size="lg"
+                  className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-semibold px-8 py-5"
               >
                 {t.search}
               </Button>
@@ -202,21 +205,22 @@ const HeroSection = ({
           </form>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-row gap-3 justify-center">
             <Button
-              size="lg"
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 text-lg"
+                size="sm"
+                className="bg-green-600 hover:bg-green-700 text-white font-medium px-5 py-5 text-base rounded-lg"
             >
               {t.postSelling}
             </Button>
             <Button
-              size="lg"
-              variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-blue-800 font-semibold px-8 py-3 text-lg"
+                size="sm"
+                className="bg-amber-500 hover:bg-amber-600 text-white font-medium px-5 py-5 text-base rounded-lg"
             >
               {t.postBuying}
             </Button>
           </div>
+
+
         </div>
       </div>
       {/* Wave shape divider */}

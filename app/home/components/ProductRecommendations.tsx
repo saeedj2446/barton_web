@@ -73,7 +73,7 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
       id: "3",
       name: "Organic Dried Fruits - Wholesale",
       image:
-        "https://images.unsplash.com/photo-1596591868231-05e882c014c7?w=800&q=80",
+        "https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=800&q=80",
       priceRange: "$12.00 - $18.00 per kg",
       minOrderQuantity: "250 kg",
       rating: 4.9,
@@ -126,14 +126,14 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
   const filteredProducts = products;
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-white">
+    <section className="py-1 px-4 md:px-8 bg-white">
       <div className="container mx-auto max-w-7xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
+         {/* <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
             {title}
-          </h2>
+          </h2>*/}
 
-          <Tabs
+          {/*<Tabs
             defaultValue="All"
             value={selectedIndustry}
             onValueChange={setSelectedIndustry}
@@ -150,7 +150,7 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
                 </TabsTrigger>
               ))}
             </TabsList>
-          </Tabs>
+          </Tabs>*/}
         </div>
 
         <Carousel
