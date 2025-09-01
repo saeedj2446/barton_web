@@ -126,31 +126,13 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
   const filteredProducts = products;
 
   return (
-    <section className="py-1 px-4 md:px-8 bg-white">
+    <section className="py-16 px-4 md:px-8 bg-white">
       <div className="container mx-auto max-w-7xl">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-         {/* <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
-            {title}
-          </h2>*/}
-
-          {/*<Tabs
-            defaultValue="All"
-            value={selectedIndustry}
-            onValueChange={setSelectedIndustry}
-            className="w-full md:w-auto"
-          >
-            <TabsList className="bg-gray-100 p-1 rounded-lg">
-              {industries.map((industry) => (
-                <TabsTrigger
-                  key={industry}
-                  value={industry}
-                  className="px-4 py-2"
-                >
-                  {industry}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>*/}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">{title}</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Discover quality products from verified suppliers worldwide
+          </p>
         </div>
 
         <Carousel
@@ -177,7 +159,7 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
         </Carousel>
 
         <div className="flex justify-center mt-10">
-          <button className="px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">
+          <button className="px-6 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition-colors">
             View All Products
           </button>
         </div>
@@ -230,7 +212,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <span className="ml-2 text-sm text-gray-600">{product.rating}</span>
         </div>
 
-        <div className="text-primary font-medium mb-1">
+        <div className="text-orange-600 font-medium mb-1">
           {product.priceRange}
         </div>
         <div className="text-sm text-gray-500 mb-3">
@@ -250,7 +232,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {product.verified && (
             <Badge
               variant="outline"
-              className="border-green-500 text-green-600 text-xs"
+              className="border-orange-500 text-orange-600 text-xs"
             >
               Verified
             </Badge>

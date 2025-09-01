@@ -157,7 +157,7 @@ const BuyingRequests = ({
             {t.subtitle}
           </p>
           <a href="/buying-requests">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">
+            <Button className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2">
               {currentLanguage.code === "fa"
                 ? "مشاهده همه درخواست‌ها"
                 : "View All Requests"}
@@ -207,7 +207,7 @@ const BuyingRequests = ({
                     className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
                   >
                     <Package
-                      className={`w-4 h-4 text-blue-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
+                      className={`w-4 h-4 text-orange-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
                     />
                     <span className="text-sm">
                       <span className="font-medium">{t.quantity}:</span>{" "}

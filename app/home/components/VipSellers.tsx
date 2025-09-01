@@ -99,7 +99,7 @@ const VipSellers = ({
 
   return (
     <div
-      className={`py-1 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
+      className={`py-16 bg-gray-50 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
       dir={currentLanguage.direction}
     >
       <div className="container mx-auto px-4">
@@ -125,7 +125,7 @@ const VipSellers = ({
                       className="w-20 h-20 rounded-full mx-auto bg-gray-100"
                     />
                     {seller.verified && (
-                      <div className="absolute -top-1 -right-1 bg-blue-600 rounded-full p-1">
+                      <div className="absolute -top-1 -right-1 bg-orange-600 rounded-full p-1">
                         <Award className="w-4 h-4 text-white" />
                       </div>
                     )}
@@ -141,7 +141,7 @@ const VipSellers = ({
                     />
                     <span className="text-sm">{seller.location}</span>
                   </div>
-                  <p className="text-sm text-blue-600 font-medium mb-4">
+                  <p className="text-sm text-orange-600 font-medium mb-4">
                     {seller.speciality}
                   </p>
                 </div>
@@ -181,12 +181,12 @@ const VipSellers = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                  <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
                     {t.viewProfile}
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
+                    className="w-full border-orange-600 text-orange-600 hover:bg-orange-50"
                   >
                     {t.contact}
                   </Button>

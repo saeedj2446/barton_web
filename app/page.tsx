@@ -80,13 +80,8 @@ export default function HomePage() {
         onLanguageChange={handleLanguageChange}
       />
 
-      {/* Statistics Section */}
-     {/* <StatsSection currentLanguage={currentLanguage} />*/}
-
       {/* Popular Categories Section */}
-      <div className="container mx-auto px-4 py-12">
-        <CategoryShowcase currentLanguage={currentLanguage}/>
-      </div>
+      <CategoryShowcase currentLanguage={currentLanguage} />
 
       {/* VIP Sellers Section */}
       <VipSellers currentLanguage={currentLanguage} />

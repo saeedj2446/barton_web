@@ -63,22 +63,22 @@ const TrustSection: React.FC<TrustSectionProps> = ({
     {
       value: "10,000+",
       label: "Verified Suppliers",
-      icon: <Users className="h-6 w-6 text-blue-500" />,
+      icon: <Users className="h-6 w-6 text-orange-500" />,
     },
     {
       value: "25,000+",
       label: "Active Buyers",
-      icon: <Users className="h-6 w-6 text-green-500" />,
+      icon: <Users className="h-6 w-6 text-orange-500" />,
     },
     {
       value: "$500M+",
       label: "Monthly Transactions",
-      icon: <BarChart3 className="h-6 w-6 text-purple-500" />,
+      icon: <BarChart3 className="h-6 w-6 text-orange-500" />,
     },
   ],
   trustBadges = [
     {
-      icon: <Shield className="h-6 w-6 text-blue-600" />,
+      icon: <Shield className="h-6 w-6 text-orange-600" />,
       label: "Secure Transactions",
     },
     {
@@ -104,7 +104,7 @@ const TrustSection: React.FC<TrustSectionProps> = ({
   };
 
   return (
-    <section className="w-full py-12 bg-gradient-to-b from-white to-gray-50">
+    <section className="w-full py-16 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
@@ -184,14 +184,14 @@ const TrustSection: React.FC<TrustSectionProps> = ({
         <div className="text-center mt-12">
           <Badge
             variant="outline"
-            className="mb-4 px-3 py-1 text-blue-600 border-blue-200 bg-blue-50"
+            className="mb-4 px-3 py-1 text-orange-600 border-orange-200 bg-orange-50"
           >
             Join Our Global Network
           </Badge>
           <h3 className="text-2xl font-bold mb-4">
             Ready to transform your wholesale business?
           </h3>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors">
+          <button className="bg-orange-600 hover:bg-orange-700 text-white font-medium py-2 px-6 rounded-md transition-colors">
             Get Started Today
           </button>
         </div>
