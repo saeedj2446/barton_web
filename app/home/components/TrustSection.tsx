@@ -22,11 +22,16 @@ interface TrustBadge {
   icon: React.ReactNode;
   label: string;
 }
-
+interface Language {
+  name: string;
+  code: string;
+  direction: "ltr" | "rtl";
+}
 interface TrustSectionProps {
   testimonials?: Testimonial[];
   metrics?: Metric[];
   trustBadges?: TrustBadge[];
+  currentLanguage?: Language;
 }
 
 const TrustSection: React.FC<TrustSectionProps> = ({

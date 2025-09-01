@@ -27,11 +27,16 @@ interface Product {
   supplierLocation: string;
   verified: boolean;
 }
-
+interface Language {
+  name: string;
+  code: string;
+  direction: "ltr" | "rtl";
+}
 interface ProductRecommendationsProps {
   title?: string;
   industries?: string[];
   products?: Product[];
+  currentLanguage?: Language;
 }
 
 const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({

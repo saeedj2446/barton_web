@@ -98,105 +98,122 @@ const VipSellers = ({
   ];
 
   return (
-    <div
-      className={`py-16 bg-gray-50 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
-      dir={currentLanguage.direction}
-    >
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.title}</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {t.subtitle}
-          </p>
-        </div>
+      <div
+          className={`py-16 bg-gray-50 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
+          dir={currentLanguage.direction}
+      >
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.title}</h2>
+            <p className="text-base text-gray-600 max-w-2xl mx-auto">{t.subtitle}</p>
+            <div className="flex justify-center mt-8">
+              <button
+                  className="w-60 h-10 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow flex items-center justify-center">
+                {currentLanguage.code === "fa"
+                    ? "همه فروشندگان VIP"
+                    : "View All VIP seller"}
+              </button>
+            </div>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {vipSellers.map((seller) => (
-            <Card
-              key={seller.id}
-              className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0 shadow-lg"
-            >
-              <CardContent className="p-6">
-                <div className="text-center mb-4">
-                  <div className="relative inline-block mb-4">
-                    <img
-                      src={seller.image}
-                      alt={seller.name}
-                      className="w-20 h-20 rounded-full mx-auto bg-gray-100"
-                    />
-                    {seller.verified && (
-                      <div className="absolute -top-1 -right-1 bg-orange-600 rounded-full p-1">
-                        <Award className="w-4 h-4 text-white" />
+          {/* Mobile Horizontal Scroll / Desktop Grid */}
+          <div className="md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:align-items">
+            <div
+                className="flex space-x-6 md:space-x-4 overflow-x-auto md:overflow-x-visible -mx-4 px-4 scrollbar-hide">
+              {vipSellers.map((seller) => (
+                  <Card
+                      key={seller.id}
+                      className="flex-shrink-0 w-64 md:w-64 md:mx-4  group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0 shadow-lg "
+                  >
+                    <CardContent className="p-4">
+                      <div className="text-center mb-4">
+                        <div className="relative inline-block mb-4">
+                          <img
+                              src={seller.image}
+                              alt={seller.name}
+                              className="w-20 h-20 rounded-full mx-auto bg-gray-100"
+                          />
+                          {seller.verified && (
+                              <div className="absolute -top-1 -right-1 bg-orange-600 rounded-full p-1">
+                                <Award className="w-4 h-4 text-white"/>
+                              </div>
+                          )}
+                        </div>
+                        <h3 className="font-bold text-lg text-gray-900 mb-2">{seller.name}</h3>
+                        <div
+                            className={`flex items-center justify-center text-gray-600 mb-2 ${
+                                currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
+                            }`}
+                        >
+                          <MapPin
+                              className={`w-4 h-4 ${
+                                  currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"
+                              }`}
+                          />
+                          <span className="text-sm">{seller.location}</span>
+                        </div>
+                        <p className="text-sm text-orange-600 font-medium mb-4">{seller.speciality}</p>
                       </div>
-                    )}
-                  </div>
-                  <h3 className="font-bold text-lg text-gray-900 mb-2">
-                    {seller.name}
-                  </h3>
-                  <div
-                    className={`flex items-center justify-center text-gray-600 mb-2 ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                  >
-                    <MapPin
-                      className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"}`}
-                    />
-                    <span className="text-sm">{seller.location}</span>
-                  </div>
-                  <p className="text-sm text-orange-600 font-medium mb-4">
-                    {seller.speciality}
-                  </p>
-                </div>
 
-                <div className="space-y-3 mb-6">
-                  <div
-                    className={`flex justify-between items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                  >
-                    <span className="text-sm text-gray-600">{t.rating}</span>
-                    <div
-                      className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                    >
-                      <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                      <span
-                        className={`font-semibold ${currentLanguage.direction === "rtl" ? "mr-1" : "ml-1"}`}
-                      >
-                        {seller.rating}
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className={`flex justify-between items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                  >
-                    <span className="text-sm text-gray-600">
-                      {t.yearsExperience}
+                      <div className="space-y-3 mb-6 text-sm">
+                        <div
+                            className={`flex justify-between items-center ${
+                                currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
+                            }`}
+                        >
+                          <span className="text-gray-600">{t.rating}</span>
+                          <div
+                              className={`flex items-center ${
+                                  currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
+                              }`}
+                          >
+                            <Star className="w-4 h-4 text-yellow-400 fill-current"/>
+                            <span
+                                className={`font-semibold ${
+                                    currentLanguage.direction === "rtl" ? "mr-1" : "ml-1"
+                                }`}
+                            >
+                      {seller.rating}
                     </span>
-                    <span className="font-semibold">{seller.experience}</span>
-                  </div>
-                  <div
-                    className={`flex justify-between items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                  >
-                    <span className="text-sm text-gray-600">{t.orders}</span>
-                    <span className="font-semibold">
-                      {seller.orders.toLocaleString()}
-                    </span>
-                  </div>
-                </div>
+                          </div>
+                        </div>
+                        <div
+                            className={`flex justify-between items-center ${
+                                currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
+                            }`}
+                        >
+                          <span className="text-gray-600">{t.yearsExperience}</span>
+                          <span className="font-semibold">{seller.experience}</span>
+                        </div>
+                        <div
+                            className={`flex justify-between items-center ${
+                                currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
+                            }`}
+                        >
+                          <span className="text-gray-600">{t.orders}</span>
+                          <span className="font-semibold">{seller.orders.toLocaleString()}</span>
+                        </div>
+                      </div>
 
-                <div className="space-y-2">
-                  <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
-                    {t.viewProfile}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full border-orange-600 text-orange-600 hover:bg-orange-50"
-                  >
-                    {t.contact}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                      <div className="space-y-2">
+                        <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                          {t.viewProfile}
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="w-full border-orange-600 text-orange-600 hover:bg-orange-50"
+                        >
+                          {t.contact}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
   );
 };
 

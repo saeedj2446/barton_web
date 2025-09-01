@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Clock, MapPin, DollarSign, Package } from "lucide-react";
 import {
   Card,
@@ -7,7 +7,12 @@ import {
   CardTitle,
 } from "../../../components/ui/card";
 import { Button } from "../../../components/ui/button";
-
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../../../components/ui/tabs";
 interface Language {
   name: string;
   code: string;
@@ -17,48 +22,58 @@ interface Language {
 interface BuyingRequestsProps {
   currentLanguage?: Language;
 }
-
+const locations = [
+  "شهر من",
+  "محله من",
+  "استان من",
+  "کشور من",
+  "قاره من",
+  "جهان",
+]
+const translations = {
+  en: {
+    title: "Latest Buying Requests",
+    subtitle: "Submit your best offers to potential buyers",
+    submitOffer: "Submit Offer",
+    viewDetails: "View Details",
+    quantity: "Quantity",
+    budget: "Budget",
+    deadline: "Deadline",
+    location: "Location",
+    daysAgo: "days ago",
+    urgent: "Urgent",
+  },
+  fa: {
+    title: "آخرین درخواست های خرید",
+    subtitle: "پیشنهادات خود را به خریداران بالقوه ارائه دهید",
+    submitOffer: "ارسال پیشنهاد",
+    viewDetails: "مشاهده جزئیات",
+    quantity: "مقدار",
+    budget: "بودجه",
+    deadline: "مهلت زمانی",
+    location: "موقعیت",
+    daysAgo: "روز پیش",
+    urgent: "فوری",
+  },
+  ar: {
+    title: "أحدث طلبات الشراء",
+    subtitle: "قدم أفضل عروضك للمشترين المحتملين",
+    submitOffer: "تقديم عرض",
+    viewDetails: "عرض التفاصيل",
+    quantity: "الكمية",
+    budget: "الميزانية",
+    deadline: "الموعد النهائي",
+    location: "الموقع",
+    daysAgo: "أيام مضت",
+    urgent: "عاجل",
+  },
+};
 const BuyingRequests = ({
   currentLanguage = { name: "English", code: "en", direction: "ltr" },
 }: BuyingRequestsProps) => {
-  const translations = {
-    en: {
-      title: "Latest Buying Requests",
-      subtitle: "Submit your best offers to potential buyers",
-      submitOffer: "Submit Offer",
-      viewDetails: "View Details",
-      quantity: "Quantity",
-      budget: "Budget",
-      deadline: "Deadline",
-      location: "Location",
-      daysAgo: "days ago",
-      urgent: "Urgent",
-    },
-    fa: {
-      title: "آخرین درخواست های خرید",
-      subtitle: "بهترین پیشنهادات خود را به خریداران بالقوه ارائه دهید",
-      submitOffer: "ارسال پیشنهاد",
-      viewDetails: "مشاهده جزئیات",
-      quantity: "مقدار",
-      budget: "بودجه",
-      deadline: "مهلت زمانی",
-      location: "موقعیت",
-      daysAgo: "روز پیش",
-      urgent: "فوری",
-    },
-    ar: {
-      title: "أحدث طلبات الشراء",
-      subtitle: "قدم أفضل عروضك للمشترين المحتملين",
-      submitOffer: "تقديم عرض",
-      viewDetails: "عرض التفاصيل",
-      quantity: "الكمية",
-      budget: "الميزانية",
-      deadline: "الموعد النهائي",
-      location: "الموقع",
-      daysAgo: "أيام مضت",
-      urgent: "عاجل",
-    },
-  };
+
+  const [selectedLocation, setSelectedLocation] = useState("شهر من");
+
 
   const t =
     translations[currentLanguage.code as keyof typeof translations] ||
@@ -152,116 +167,139 @@ const BuyingRequests = ({
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.title}</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">{t.title}</h2>
+          <p className="text-base text-gray-600 max-w-2xl mx-auto mb-6">
             {t.subtitle}
           </p>
-          <a href="/buying-requests">
-            <Button className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2">
+          <div className="flex justify-center mt-8">
+            <button
+                className="w-60 h-10 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow flex items-center justify-center">
               {currentLanguage.code === "fa"
-                ? "مشاهده همه درخواست‌ها"
-                : "View All Requests"}
-            </Button>
-          </a>
+                  ? "مشاهده همه درخواست‌ها"
+                  : "View All Requests"}
+            </button>
+          </div>
+
         </div>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+          <Tabs
+              defaultValue="All"
+              value={selectedLocation}
+              onValueChange={setSelectedLocation}
+              className="w-full md:w-auto"
+          >
+            <TabsList className="bg-gray-100 p-1 rounded-lg">
+              {locations.map((industry) => (
+                  <TabsTrigger
+                      key={industry}
+                      value={industry}
+                      className="px-4 py-2"
+                  >
+                    {industry}
+                  </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {buyingRequests.map((request) => (
-            <Card
-              key={request.id}
-              className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-0 shadow-lg"
-            >
-              <CardHeader className="pb-3">
-                <div
-                  className={`flex items-start justify-between ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                >
-                  <div className="flex-1">
-                    <CardTitle className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
-                      {request.title}
-                    </CardTitle>
-                    <div
-                      className={`flex items-center text-sm text-gray-500 ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                    >
-                      <Clock
-                        className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"}`}
-                      />
-                      <span>
+              <Card
+                  key={request.id}
+                  className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-0 shadow-lg"
+              >
+                <CardHeader className="pb-3">
+                  <div
+                      className={`flex items-start justify-between ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+                  >
+                    <div className="flex-1">
+                      <CardTitle className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                        {request.title}
+                      </CardTitle>
+                      <div
+                          className={`flex items-center text-sm text-gray-500 ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+                      >
+                        <Clock
+                            className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"}`}
+                        />
+                        <span>
                         {request.postedDays} {t.daysAgo}
                       </span>
+                      </div>
                     </div>
-                  </div>
-                  {request.urgent && (
-                    <span className="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">
+                    {request.urgent && (
+                        <span className="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">
                       {t.urgent}
                     </span>
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  {request.description}
-                </p>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {request.description}
+                  </p>
 
-                <div className="space-y-3 mb-6">
-                  <div
-                    className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                  >
-                    <Package
-                      className={`w-4 h-4 text-orange-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
-                    />
-                    <span className="text-sm">
+                  <div className="space-y-3 mb-6">
+                    <div
+                        className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+                    >
+                      <Package
+                          className={`w-4 h-4 text-orange-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
+                      />
+                      <span className="text-sm">
                       <span className="font-medium">{t.quantity}:</span>{" "}
-                      {request.quantity}
+                        {request.quantity}
                     </span>
-                  </div>
-                  <div
-                    className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                  >
-                    <DollarSign
-                      className={`w-4 h-4 text-green-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
-                    />
-                    <span className="text-sm">
+                    </div>
+                    <div
+                        className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+                    >
+                      <DollarSign
+                          className={`w-4 h-4 text-green-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
+                      />
+                      <span className="text-sm">
                       <span className="font-medium">{t.budget}:</span>{" "}
-                      {request.budget}
+                        {request.budget}
                     </span>
-                  </div>
-                  <div
-                    className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                  >
-                    <Clock
-                      className={`w-4 h-4 text-orange-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
-                    />
-                    <span className="text-sm">
+                    </div>
+                    <div
+                        className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+                    >
+                      <Clock
+                          className={`w-4 h-4 text-orange-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
+                      />
+                      <span className="text-sm">
                       <span className="font-medium">{t.deadline}:</span>{" "}
-                      {request.deadline}
+                        {request.deadline}
                     </span>
-                  </div>
-                  <div
-                    className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-                  >
-                    <MapPin
-                      className={`w-4 h-4 text-purple-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
-                    />
-                    <span className="text-sm">
+                    </div>
+                    <div
+                        className={`flex items-center ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+                    >
+                      <MapPin
+                          className={`w-4 h-4 text-purple-600 ${currentLanguage.direction === "rtl" ? "ml-2" : "mr-2"}`}
+                      />
+                      <span className="text-sm">
                       <span className="font-medium">{t.location}:</span>{" "}
-                      {request.location}
+                        {request.location}
                     </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="space-y-2">
-                  <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
-                    {t.submitOffer}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
-                  >
-                    {t.viewDetails}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  <div className="space-y-2">
+                    <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
+                      {t.submitOffer}
+                    </Button>
+                    <Button
+                        variant="outline"
+                        className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
+                    >
+                      {t.viewDetails}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
           ))}
         </div>
       </div>
