@@ -51,7 +51,7 @@ const HeroSection = ({
     },
     fa: {
       connect: "بازار عمده فروشی جهانی و محلی",
-      discover: "ما شما را به مشتریان و تامین کنندگان هدف وصل می کنیم",
+      discover: "با بارتون به اصناف و مشتریان هدف وصل شوید.",
       searchPlaceholder: "جستجوی محصولات، تامین کنندگان یا دسته بندی ها...",
       search: "جستجو",
       postSelling: "ثبت آگهی فروش",
@@ -172,8 +172,8 @@ const HeroSection = ({
       </div>
       {/* Hero Content */}
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
-        <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">{t.connect}</h2>
+        <div className="text-center max-w-3xl mx-auto">
+          <h3 className="text-3xl md:text-3xl font-bold mb-6">{t.connect}</h3>
           <p className="text-xl md:text-2xl mb-8 text-blue-100">{t.discover}</p>
 
           {/* Search Bar */}
