@@ -9,6 +9,7 @@ import {
   Bell,
   Package,
   Shield,
+  MapPin,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
@@ -20,25 +21,152 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
 
-
-
 interface Language {
   name: string;
   code: string;
   direction: "ltr" | "rtl";
 }
 
+interface Location {
+  id: string;
+  name: string;
+  type: "city" | "province" | "country" | "continent" | "global";
+  parentId?: string;
+}
+
 interface HeroSectionProps {
   currentLanguage?: Language;
   onLanguageChange?: (language: Language) => void;
+  selectedLocation?: Location;
+  onLocationChange?: (location: Location) => void;
 }
 
 const HeroSection = ({
   currentLanguage = { name: "English", code: "en", direction: "ltr" },
   onLanguageChange = () => {},
+  selectedLocation = {
+    id: "shiraz",
+    name: "شیراز",
+    type: "city",
+    parentId: "fars",
+  },
+  onLocationChange = () => {},
 }: HeroSectionProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Location data for Iran and UAE
+  const locationData = {
+    countries: [
+      { id: "iran", name: "ایران", type: "country" as const },
+      { id: "uae", name: "امارات متحده عربی", type: "country" as const },
+    ],
+    provinces: {
+      iran: [
+        {
+          id: "fars",
+          name: "فارس",
+          type: "province" as const,
+          parentId: "iran",
+        },
+        {
+          id: "tehran",
+          name: "تهران",
+          type: "province" as const,
+          parentId: "iran",
+        },
+      ],
+      uae: [
+        {
+          id: "dubai",
+          name: "دبی",
+          type: "province" as const,
+          parentId: "uae",
+        },
+        {
+          id: "abudhabi",
+          name: "ابوظبی",
+          type: "province" as const,
+          parentId: "uae",
+        },
+      ],
+    },
+    cities: {
+      fars: [
+        {
+          id: "shiraz",
+          name: "شیراز",
+          type: "city" as const,
+          parentId: "fars",
+        },
+        {
+          id: "marvdasht",
+          name: "مرودشت",
+          type: "city" as const,
+          parentId: "fars",
+        },
+      ],
+      tehran: [
+        {
+          id: "tehran-city",
+          name: "تهران",
+          type: "city" as const,
+          parentId: "tehran",
+        },
+        { id: "karaj", name: "کرج", type: "city" as const, parentId: "tehran" },
+      ],
+      dubai: [
+        {
+          id: "dubai-city",
+          name: "دبی",
+          type: "city" as const,
+          parentId: "dubai",
+        },
+        {
+          id: "sharjah",
+          name: "شارجه",
+          type: "city" as const,
+          parentId: "dubai",
+        },
+      ],
+      abudhabi: [
+        {
+          id: "abudhabi-city",
+          name: "ابوظبی",
+          type: "city" as const,
+          parentId: "abudhabi",
+        },
+        {
+          id: "alain",
+          name: "العین",
+          type: "city" as const,
+          parentId: "abudhabi",
+        },
+      ],
+    },
+  };
+
+  const getAllLocations = () => {
+    const locations = [
+      { id: "global", name: "جهانی", type: "global" as const },
+      ...locationData.countries,
+    ];
+
+    locationData.countries.forEach((country) => {
+      const provinces = locationData.provinces[country.id] || [];
+      locations.push(...provinces);
+
+      provinces.forEach((province) => {
+        const cities = locationData.cities[province.id] || [];
+        locations.push(...cities);
+      });
+    });
+
+    return locations;
+  };
+
+  const handleLocationSelect = (location: Location) => {
+    onLocationChange(location);
+  };
 
   const languages: Language[] = [
     { name: "English", code: "en", direction: "ltr" },
@@ -156,7 +284,6 @@ const HeroSection = ({
           "پیگیری آسان سفارشات و موجودی عمده فروشان",
         ],
       },
-
     },
     ar: {
       connect: "السوق الرائد للبيع والشراء بالجملة",
@@ -214,7 +341,6 @@ const HeroSection = ({
           "إدارة المدفوعات والفواتير",
         ],
       },
-
     },
   };
 
@@ -233,100 +359,93 @@ const HeroSection = ({
   };
 
   return (
-      <div
-          className={`w-full ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
-          dir={currentLanguage.direction}
-      >
-
-
-        {/* Top Navigation Bar */}
-        <div className="bg-gray-600 text-white text-sm">
-          <div className="container mx-auto px-1 py-3">
+    <div
+      className={`w-full ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
+      dir={currentLanguage.direction}
+    >
+      {/* Top Navigation Bar */}
+      <div className="bg-gray-600 text-white text-sm">
+        <div className="container mx-auto px-1 py-3">
+          <div
+            className={`flex items-center justify-between ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+          >
             <div
-                className={`flex items-center justify-between ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+              className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-6" : "space-x-6"}`}
             >
-              <div
-                  className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-6" : "space-x-6"}`}
-              >
-                <a href="#" className="hover:text-orange-400 transition">
-                  پیامها
-                </a>
-                <a href="#" className="hover:text-orange-400 transition">
-                  {t.suppliers}
-                </a>
-                <a href="#" className="hover:text-orange-400 transition">
-                  {t.buyers}
-                </a>
-
-              </div>
-              <div
-                  className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-4" : "space-x-4"}`}
-              >
-
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
-                        className="flex items-center transition hover:text-orange-400
+              <a href="#" className="hover:text-orange-400 transition">
+                پیامها
+              </a>
+              <a href="#" className="hover:text-orange-400 transition">
+                {t.suppliers}
+              </a>
+              <a href="#" className="hover:text-orange-400 transition">
+                {t.buyers}
+              </a>
+            </div>
+            <div
+              className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-4" : "space-x-4"}`}
+            >
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="flex items-center transition hover:text-orange-400
                  focus:outline-none focus:ring-1 focus:ring-white focus:ring-opacity-40
                  rounded-md px-3 py-1"
+                  >
+                    <Globe
+                      className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"}`}
+                    />
+                    {currentLanguage.name}
+                    <ChevronDown
+                      className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "mr-1" : "ml-1"}`}
+                    />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {languages.map((lang) => (
+                    <DropdownMenuItem
+                      key={lang.code}
+                      onClick={() => handleLanguageSelect(lang)}
                     >
-                      <Globe
-                          className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"}`}
-                      />
-                      {currentLanguage.name}
-                      <ChevronDown
-                          className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "mr-1" : "ml-1"}`}
-                      />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    {languages.map((lang) => (
-                        <DropdownMenuItem
-                            key={lang.code}
-                            onClick={() => handleLanguageSelect(lang)}
-                        >
-                          {lang.name}
-                        </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-              </div>
+                      {lang.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Main Header */}
-        <div className="bg-white border-b">
-          <div className="container mx-auto px-2 md:px-4 py-2 md:py-4">
-            <div
-                className={`flex items-center justify-between ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
-            >
+      {/* Main Header */}
+      <div className="bg-white border-b">
+        <div className="container mx-auto px-2 md:px-4 py-2 md:py-4">
+          <div
+            className={`flex items-center justify-between ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
+          >
+            {/* Right Side Actions - Hidden on mobile */}
+            <header className="w-full bg-white">
+              <div className="w-full bg-white flex  justify-between px-2 ">
+                {/* لوگو و اسم برند */}
+                <Link href="/" className="flex items-center gap-2">
+                  <Package className="w-8 h-8 text-orange-500" />
+                  <div className="flex flex-col">
+                    <h1 className="text-lg md:text-xl font-bold text-orange-500">
+                      Barton
+                    </h1>
+                    {/* <span className="text-xs md:text-sm text-orange-400">{t.tagline}</span>*/}
+                  </div>
+                </Link>
 
-
-              {/* Right Side Actions - Hidden on mobile */}
-              <header className="w-full bg-white">
-                <div className="w-full bg-white flex  justify-between px-2 ">
-
-                  {/* لوگو و اسم برند */}
-                  <Link href="/" className="flex items-center gap-2">
-                    <Package className="w-8 h-8 text-orange-500"/>
-                    <div className="flex flex-col">
-                      <h1 className="text-lg md:text-xl font-bold text-orange-500">Barton</h1>
-                      {/* <span className="text-xs md:text-sm text-orange-400">{t.tagline}</span>*/}
-                    </div>
-                  </Link>
-
-                  {/* دکمه‌ها و آیکون‌ها */}
-                  <div
-                      className={`hidden md:flex items-center ${
-                          currentLanguage.direction === "rtl"
-                              ? "space-x-reverse space-x-4"
-                              : "space-x-4"
-                      }`}
-                  >
-                    {/*<Link href="/user-panel">
+                {/* دکمه‌ها و آیکون‌ها */}
+                <div
+                  className={`hidden md:flex items-center ${
+                    currentLanguage.direction === "rtl"
+                      ? "space-x-reverse space-x-4"
+                      : "space-x-4"
+                  }`}
+                >
+                  {/*<Link href="/user-panel">
                       <Button
                           variant="ghost"
                           className="text-gray-700 hover:text-orange-500"
@@ -334,35 +453,32 @@ const HeroSection = ({
                         <User className="w-5 h-5"/>
                       </Button>
                     </Link>*/}
+                  <Button
+                    variant="ghost"
+                    className="text-gray-700 hover:text-orange-500"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                  </Button>
+                  <Link href="/login">
                     <Button
-                        variant="ghost"
-                        className="text-gray-700 hover:text-orange-500"
+                      variant="outline"
+                      className="border-orange-500 text-orange-500 hover:bg-orange-50"
                     >
-                      <ShoppingCart className="w-5 h-5"/>
+                      {t.signIn}
                     </Button>
-                    <Link href="/login">
-                      <Button
-                          variant="outline"
-                          className="border-orange-500 text-orange-500 hover:bg-orange-50"
-                      >
-                        {t.signIn}
-                      </Button>
-                    </Link>
-                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-                      {t.joinFree}
-                    </Button>
-                  </div>
+                  </Link>
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                    {t.joinFree}
+                  </Button>
                 </div>
-              </header>
-
-
-            </div>
+              </div>
+            </header>
           </div>
+        </div>
 
-          {/* Mobile Search Bar */}
-          <div className="md:hidden px-2 pb-2">
-
-            {/*<form onSubmit={handleSearch}>
+        {/* Mobile Search Bar */}
+        <div className="md:hidden px-2 pb-2">
+          {/*<form onSubmit={handleSearch}>
               <div className="flex">
                 <div className="relative flex-1">
                   <Input
@@ -384,89 +500,123 @@ const HeroSection = ({
                 </Button>
               </div>
             </form>*/}
-          </div>
         </div>
+      </div>
 
-        {/* Hero Section */}
-        <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white relative overflow-hidden">
-          {/* Background Image */}
-          <div
-              className="absolute inset-0  bg-cover bg-center opacity-20"></div>
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0  bg-cover bg-center opacity-20"></div>
 
-          <div className="relative z-10 container mx-auto px-2 md:px-4 py-8 md:py-16 flex flex-col items-center">
+        <div className="relative z-10 container mx-auto px-2 md:px-4 py-8 md:py-16 flex flex-col items-center">
+          {/* CTA Buttons + متن بالایی */}
+          <div className="text-center px-4 md:px-0 w-full max-w-5xl mx-auto">
+            {/* عنوان */}
+            <h1 className="text-[16px] md:text-[23px] font-bold mb-3 md:mb-4 leading-tight">
+              {t.connect}
+            </h1>
 
-            {/* CTA Buttons + متن بالایی */}
-            <div className="text-center px-4 md:px-0 w-full max-w-5xl mx-auto">
-              {/* عنوان */}
-              <h1 className="text-[16px] md:text-[23px] font-bold mb-3 md:mb-4 leading-tight">
-                {t.connect}
-              </h1>
+            {/* توضیح */}
+            <p className="text-base md:text-xl text-gray-300 mb-4 md:mb-6">
+              {t.discover}
+            </p>
 
-              {/* توضیح */}
-              <p className="text-base md:text-xl text-gray-300 mb-4 md:mb-6">
-                {t.discover}
-              </p>
+            {/* نوار جستجو */}
+            <div className="flex justify-center max-w-2xl mx-auto my-10 w-full">
+              <form onSubmit={handleSearch} className="w-full">
+                <div className="flex flex-col md:flex-row gap-2 md:gap-1">
+                  {/* Location selector and search box */}
+                  <div className="relative flex-1 flex gap-2">
+                    {/* Location Selector */}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button className="flex items-center gap-2 px-4 h-12 bg-white border border-orange-500 rounded-md hover:bg-orange-50 transition-colors">
+                          <MapPin className="w-4 h-4 text-orange-500" />
+                          <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                            {selectedLocation.name}
+                          </span>
+                          <ChevronDown className="w-4 h-4 text-gray-400" />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56">
+                        {getAllLocations().map((location) => (
+                          <DropdownMenuItem
+                            key={location.id}
+                            onClick={() => handleLocationSelect(location)}
+                            className={
+                              selectedLocation.id === location.id
+                                ? "bg-orange-50"
+                                : ""
+                            }
+                          >
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-gray-400" />
+                              <span>{location.name}</span>
+                              {location.type !== "global" && (
+                                <span className="text-xs text-gray-400">
+                                  ({location.type})
+                                </span>
+                              )}
+                            </div>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
 
-              {/* نوار جستجو */}
-              <div className="flex justify-center max-w-2xl mx-auto my-10 w-full">
-                <form onSubmit={handleSearch} className="w-full">
-                  <div className="flex flex-col md:flex-row gap-2 md:gap-1">
-                    {/* تکست باکس */}
+                    {/* Search Box */}
                     <div className="relative flex-1">
                       <Input
-                          type="text"
-                          placeholder={t.searchPlaceholder}
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className={`${
-                              currentLanguage.direction === "rtl" ? "pr-4 pl-12" : "pl-4 pr-12"
-                          } h-12 text-base text-orange-500 bg-white border-1 border-orange-500 focus:border-orange-600 rounded-md w-full`}
+                        type="text"
+                        placeholder={t.searchPlaceholder}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className={`${
+                          currentLanguage.direction === "rtl"
+                            ? "pr-4 pl-12"
+                            : "pl-4 pr-12"
+                        } h-12 text-base text-orange-500 bg-white border-1 border-orange-500 focus:border-orange-600 rounded-md w-full`}
                       />
 
                       <Search
-                          className={`absolute ${
-                              currentLanguage.direction === "rtl" ? "left-3" : "right-3"
-                          } top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5`}
+                        className={`absolute ${
+                          currentLanguage.direction === "rtl"
+                            ? "left-3"
+                            : "right-3"
+                        } top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5`}
                       />
                     </div>
-
-                    {/* دکمه جستجو */}
-                    <Button
-                        type="submit"
-                        className="bg-orange-500 hover:bg-orange-600 text-white px-8 h-12 rounded-md w-full md:w-auto"
-                    >
-                      {t.search}
-                    </Button>
                   </div>
 
-                </form>
-              </div>
-
-              {/* دکمه‌های عملیات */}
-              <div
-                  className={`flex flex-col md:flex-row gap-3 md:gap-4 justify-center w-full max-w-md mx-auto ${
-                      currentLanguage.direction === "rtl" ? "md:flex-row-reverse" : ""
-                  }`}
-              >
-                <Button
-                    className="flex-1 bg-green-500 hover:bg-orange-600 text-white py-3 md:py-6 text-sm md:text-base">
-                  {t.postBuying}
-                </Button>
-                <Button
-                    className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 md:py-6 text-sm md:text-base">
-                  {t.postSelling}
-                </Button>
-              </div>
-
-
+                  {/* دکمه جستجو */}
+                  <Button
+                    type="submit"
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-8 h-12 rounded-md w-full md:w-auto"
+                  >
+                    {t.search}
+                  </Button>
+                </div>
+              </form>
             </div>
 
+            {/* دکمه‌های عملیات */}
+            <div
+              className={`flex flex-col md:flex-row gap-3 md:gap-4 justify-center w-full max-w-md mx-auto ${
+                currentLanguage.direction === "rtl" ? "md:flex-row-reverse" : ""
+              }`}
+            >
+              <Button className="flex-1 bg-green-500 hover:bg-orange-600 text-white py-3 md:py-6 text-sm md:text-base">
+                {t.postBuying}
+              </Button>
+              <Button className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 md:py-6 text-sm md:text-base">
+                {t.postSelling}
+              </Button>
+            </div>
           </div>
         </div>
+      </div>
 
-
-        {/* Stats Section */}
-        {/*<div className="bg-orange-600 text-white py-8 md:py-12">
+      {/* Stats Section */}
+      {/*<div className="bg-orange-600 text-white py-8 md:py-12">
           <div className="container mx-auto px-2 md:px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 text-center">
 
@@ -534,33 +684,32 @@ const HeroSection = ({
           </div>
         </div>*/}
 
-
-        {/* Mobile Navigation Footer */}
-        <div className="md:hidden mobile-nav-footer">
-          <div className="grid grid-cols-5 h-16">
-            <a href="/" className="mobile-nav-item active">
-              <Package className="w-5 h-5 mb-1"/>
-              <span>خانه</span>
-            </a>
-            <a href="/products" className="mobile-nav-item">
-              <Search className="w-5 h-5 mb-1"/>
-              <span>محصولات</span>
-            </a>
-            <a href="/buying-requests" className="mobile-nav-item">
-              <ShoppingCart className="w-5 h-5 mb-1"/>
-              <span>درخواست‌ها</span>
-            </a>
-            <a href="/user-panel" className="mobile-nav-item">
-              <User className="w-5 h-5 mb-1"/>
-              <span>پروفایل</span>
-            </a>
-            <a href="#" className="mobile-nav-item">
-              <Menu className="w-5 h-5 mb-1"/>
-              <span>منو</span>
-            </a>
-          </div>
+      {/* Mobile Navigation Footer */}
+      <div className="md:hidden mobile-nav-footer">
+        <div className="grid grid-cols-5 h-16">
+          <a href="/" className="mobile-nav-item active">
+            <Package className="w-5 h-5 mb-1" />
+            <span>خانه</span>
+          </a>
+          <a href="/products" className="mobile-nav-item">
+            <Search className="w-5 h-5 mb-1" />
+            <span>محصولات</span>
+          </a>
+          <a href="/buying-requests" className="mobile-nav-item">
+            <ShoppingCart className="w-5 h-5 mb-1" />
+            <span>درخواست‌ها</span>
+          </a>
+          <a href="/user-panel" className="mobile-nav-item">
+            <User className="w-5 h-5 mb-1" />
+            <span>پروفایل</span>
+          </a>
+          <a href="#" className="mobile-nav-item">
+            <Menu className="w-5 h-5 mb-1" />
+            <span>منو</span>
+          </a>
         </div>
       </div>
+    </div>
   );
 };
 

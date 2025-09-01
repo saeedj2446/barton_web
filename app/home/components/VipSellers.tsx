@@ -9,12 +9,28 @@ interface Language {
   direction: "ltr" | "rtl";
 }
 
+interface Location {
+  id: string;
+  name: string;
+  type: "city" | "province" | "country" | "continent" | "global";
+  parentId?: string;
+}
+
 interface VipSellersProps {
   currentLanguage?: Language;
+  selectedLocation?: Location;
+  onLocationChange?: (location: Location) => void;
 }
 
 const VipSellers = ({
   currentLanguage = { name: "English", code: "en", direction: "ltr" },
+  selectedLocation = {
+    id: "shiraz",
+    name: "شیراز",
+    type: "city",
+    parentId: "fars",
+  },
+  onLocationChange = () => {},
 }: VipSellersProps) => {
   const translations = {
     en: {
@@ -50,170 +66,230 @@ const VipSellers = ({
     translations[currentLanguage.code as keyof typeof translations] ||
     translations.en;
 
-  const vipSellers = [
-    {
-      id: 1,
-      name: "Global Tech Solutions",
-      location: "Shanghai, China",
-      rating: 4.9,
-      experience: 12,
-      orders: 2500,
-      speciality: "Electronics & Components",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller1",
-      verified: true,
-    },
-    {
-      id: 2,
-      name: "Premium Textiles Co.",
-      location: "Istanbul, Turkey",
-      rating: 4.8,
-      experience: 8,
-      orders: 1800,
-      speciality: "Textiles & Fabrics",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller2",
-      verified: true,
-    },
-    {
-      id: 3,
-      name: "Industrial Machinery Ltd",
-      location: "Mumbai, India",
-      rating: 4.9,
-      experience: 15,
-      orders: 3200,
-      speciality: "Machinery & Equipment",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller3",
-      verified: true,
-    },
-    {
-      id: 4,
-      name: "Organic Foods Export",
-      location: "São Paulo, Brazil",
-      rating: 4.7,
-      experience: 6,
-      orders: 1200,
-      speciality: "Food & Beverages",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller4",
-      verified: true,
-    },
-  ];
+  // Location-based VIP sellers data
+  const allVipSellers = {
+    shiraz: [
+      {
+        id: 1,
+        name: "شرکت فناوری پارس",
+        location: "شیراز، ایران",
+        locationId: "shiraz",
+        rating: 4.9,
+        experience: 12,
+        orders: 2500,
+        speciality: "الکترونیک و قطعات",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller1",
+        verified: true,
+      },
+      {
+        id: 2,
+        name: "نساجی ممتاز شیراز",
+        location: "شیراز، ایران",
+        locationId: "shiraz",
+        rating: 4.8,
+        experience: 8,
+        orders: 1800,
+        speciality: "نساجی و پارچه",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller2",
+        verified: true,
+      },
+    ],
+    "tehran-city": [
+      {
+        id: 3,
+        name: "ماشین‌آلات صنعتی تهران",
+        location: "تهران، ایران",
+        locationId: "tehran-city",
+        rating: 4.9,
+        experience: 15,
+        orders: 3200,
+        speciality: "ماشین‌آلات و تجهیزات",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller3",
+        verified: true,
+      },
+    ],
+    "dubai-city": [
+      {
+        id: 4,
+        name: "Dubai Premium Trading",
+        location: "دبی، امارات",
+        locationId: "dubai-city",
+        rating: 4.7,
+        experience: 6,
+        orders: 1200,
+        speciality: "مواد غذایی و نوشیدنی",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller4",
+        verified: true,
+      },
+    ],
+    global: [
+      {
+        id: 5,
+        name: "Global Tech Solutions",
+        location: "Shanghai, China",
+        locationId: "global",
+        rating: 4.9,
+        experience: 12,
+        orders: 2500,
+        speciality: "Electronics & Components",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=seller5",
+        verified: true,
+      },
+    ],
+  };
+
+  const getVipSellersForLocation = () => {
+    const locationSellers =
+      allVipSellers[selectedLocation.id as keyof typeof allVipSellers] || [];
+
+    // If no sellers for specific location, show global sellers
+    if (locationSellers.length === 0) {
+      return allVipSellers.global || [];
+    }
+
+    return locationSellers;
+  };
+
+  const vipSellers = getVipSellersForLocation();
 
   return (
-      <div
-          className={`py-16 bg-gray-50 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
-          dir={currentLanguage.direction}
-      >
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.title}</h2>
-            <p className="text-base text-gray-600 max-w-2xl mx-auto">{t.subtitle}</p>
-            <div className="flex justify-center mt-8">
-              <button
-                  className="w-60 h-10 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow flex items-center justify-center">
-                {currentLanguage.code === "fa"
-                    ? "همه فروشندگان VIP"
-                    : "View All VIP seller"}
-              </button>
-            </div>
+    <div
+      className={`py-16 bg-gray-50 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
+      dir={currentLanguage.direction}
+    >
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            {currentLanguage.code === "fa"
+              ? `فروشندگان VIP ${selectedLocation.name}`
+              : `${t.title} in ${selectedLocation.name}`}
+          </h2>
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+            {t.subtitle}
+          </p>
+          <div className="flex justify-center mt-8">
+            <button className="w-60 h-10 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow flex items-center justify-center">
+              {currentLanguage.code === "fa"
+                ? "همه فروشندگان VIP"
+                : "View All VIP seller"}
+            </button>
           </div>
+        </div>
 
-          {/* Mobile Horizontal Scroll / Desktop Grid */}
-          <div className="md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:align-items">
-            <div
-                className="flex space-x-6 md:space-x-4 overflow-x-auto md:overflow-x-visible -mx-4 px-4 scrollbar-hide">
-              {vipSellers.map((seller) => (
-                  <Card
-                      key={seller.id}
-                      className="flex-shrink-0 w-64 md:w-64 md:mx-4  group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0 shadow-lg "
-                  >
-                    <CardContent className="p-4">
-                      <div className="text-center mb-4">
-                        <div className="relative inline-block mb-4">
-                          <img
-                              src={seller.image}
-                              alt={seller.name}
-                              className="w-20 h-20 rounded-full mx-auto bg-gray-100"
-                          />
-                          {seller.verified && (
-                              <div className="absolute -top-1 -right-1 bg-orange-600 rounded-full p-1">
-                                <Award className="w-4 h-4 text-white"/>
-                              </div>
-                          )}
+        {/* Mobile Horizontal Scroll / Desktop Grid */}
+        <div className="md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:align-items">
+          <div className="flex space-x-6 md:space-x-4 overflow-x-auto md:overflow-x-visible -mx-4 px-4 scrollbar-hide">
+            {vipSellers.map((seller) => (
+              <Card
+                key={seller.id}
+                className="flex-shrink-0 w-64 md:w-64 md:mx-4  group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0 shadow-lg "
+              >
+                <CardContent className="p-4">
+                  <div className="text-center mb-4">
+                    <div className="relative inline-block mb-4">
+                      <img
+                        src={seller.image}
+                        alt={seller.name}
+                        className="w-20 h-20 rounded-full mx-auto bg-gray-100"
+                      />
+                      {seller.verified && (
+                        <div className="absolute -top-1 -right-1 bg-orange-600 rounded-full p-1">
+                          <Award className="w-4 h-4 text-white" />
                         </div>
-                        <h3 className="font-bold text-lg text-gray-900 mb-2">{seller.name}</h3>
-                        <div
-                            className={`flex items-center justify-center text-gray-600 mb-2 ${
-                                currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
-                            }`}
-                        >
-                          <MapPin
-                              className={`w-4 h-4 ${
-                                  currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"
-                              }`}
-                          />
-                          <span className="text-sm">{seller.location}</span>
-                        </div>
-                        <p className="text-sm text-orange-600 font-medium mb-4">{seller.speciality}</p>
-                      </div>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-lg text-gray-900 mb-2">
+                      {seller.name}
+                    </h3>
+                    <div
+                      className={`flex items-center justify-center text-gray-600 mb-2 ${
+                        currentLanguage.direction === "rtl"
+                          ? "flex-row-reverse"
+                          : ""
+                      }`}
+                    >
+                      <MapPin
+                        className={`w-4 h-4 ${
+                          currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"
+                        }`}
+                      />
+                      <span className="text-sm">{seller.location}</span>
+                    </div>
+                    <p className="text-sm text-orange-600 font-medium mb-4">
+                      {seller.speciality}
+                    </p>
+                  </div>
 
-                      <div className="space-y-3 mb-6 text-sm">
-                        <div
-                            className={`flex justify-between items-center ${
-                                currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
-                            }`}
+                  <div className="space-y-3 mb-6 text-sm">
+                    <div
+                      className={`flex justify-between items-center ${
+                        currentLanguage.direction === "rtl"
+                          ? "flex-row-reverse"
+                          : ""
+                      }`}
+                    >
+                      <span className="text-gray-600">{t.rating}</span>
+                      <div
+                        className={`flex items-center ${
+                          currentLanguage.direction === "rtl"
+                            ? "flex-row-reverse"
+                            : ""
+                        }`}
+                      >
+                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                        <span
+                          className={`font-semibold ${
+                            currentLanguage.direction === "rtl"
+                              ? "mr-1"
+                              : "ml-1"
+                          }`}
                         >
-                          <span className="text-gray-600">{t.rating}</span>
-                          <div
-                              className={`flex items-center ${
-                                  currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
-                              }`}
-                          >
-                            <Star className="w-4 h-4 text-yellow-400 fill-current"/>
-                            <span
-                                className={`font-semibold ${
-                                    currentLanguage.direction === "rtl" ? "mr-1" : "ml-1"
-                                }`}
-                            >
-                      {seller.rating}
-                    </span>
-                          </div>
-                        </div>
-                        <div
-                            className={`flex justify-between items-center ${
-                                currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
-                            }`}
-                        >
-                          <span className="text-gray-600">{t.yearsExperience}</span>
-                          <span className="font-semibold">{seller.experience}</span>
-                        </div>
-                        <div
-                            className={`flex justify-between items-center ${
-                                currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""
-                            }`}
-                        >
-                          <span className="text-gray-600">{t.orders}</span>
-                          <span className="font-semibold">{seller.orders.toLocaleString()}</span>
-                        </div>
+                          {seller.rating}
+                        </span>
                       </div>
+                    </div>
+                    <div
+                      className={`flex justify-between items-center ${
+                        currentLanguage.direction === "rtl"
+                          ? "flex-row-reverse"
+                          : ""
+                      }`}
+                    >
+                      <span className="text-gray-600">{t.yearsExperience}</span>
+                      <span className="font-semibold">{seller.experience}</span>
+                    </div>
+                    <div
+                      className={`flex justify-between items-center ${
+                        currentLanguage.direction === "rtl"
+                          ? "flex-row-reverse"
+                          : ""
+                      }`}
+                    >
+                      <span className="text-gray-600">{t.orders}</span>
+                      <span className="font-semibold">
+                        {seller.orders.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
 
-                      <div className="space-y-2">
-                        <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
-                          {t.viewProfile}
-                        </Button>
-                        <Button
-                            variant="outline"
-                            className="w-full border-orange-600 text-orange-600 hover:bg-orange-50"
-                        >
-                          {t.contact}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-              ))}
-            </div>
+                  <div className="space-y-2">
+                    <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                      {t.viewProfile}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full border-orange-600 text-orange-600 hover:bg-orange-50"
+                    >
+                      {t.contact}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
-
+    </div>
   );
 };
 

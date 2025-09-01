@@ -111,6 +111,20 @@ export interface Address {
   country: string;
 }
 
+// Location interfaces
+export interface Location {
+  id: string;
+  name: string;
+  type: "city" | "province" | "country" | "continent" | "global";
+  parentId?: string;
+}
+
+export interface LocationHierarchy {
+  countries: Location[];
+  provinces: Record<string, Location[]>;
+  cities: Record<string, Location[]>;
+}
+
 // Filter and state interfaces
 export interface ProductFilters {
   status: "all" | "active" | "inactive" | "out_of_stock" | "draft";
@@ -121,6 +135,7 @@ export interface ProductFilters {
   };
   stockStatus: "all" | "in_stock" | "low_stock" | "out_of_stock";
   searchQuery: string;
+  location?: string;
 }
 
 export interface OrderFilters {
@@ -139,4 +154,46 @@ export interface OrderFilters {
     to: string;
   };
   searchQuery: string;
+  location?: string;
+}
+
+// Enhanced interfaces with location support
+export interface VipSeller {
+  id: number;
+  name: string;
+  location: string;
+  locationId: string;
+  rating: number;
+  experience: number;
+  orders: number;
+  speciality: string;
+  image: string;
+  verified: boolean;
+}
+
+export interface BuyingRequest {
+  id: number;
+  title: string;
+  description: string;
+  quantity: string;
+  budget: string;
+  deadline: string;
+  location: string;
+  locationId: string;
+  postedDays: number;
+  category: string;
+  urgent: boolean;
+}
+
+export interface ProductRecommendation {
+  id: string;
+  name: string;
+  image: string;
+  priceRange: string;
+  minOrderQuantity: string;
+  rating: number;
+  supplierName: string;
+  supplierLocation: string;
+  supplierLocationId: string;
+  verified: boolean;
 }

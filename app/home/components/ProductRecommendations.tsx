@@ -32,11 +32,20 @@ interface Language {
   code: string;
   direction: "ltr" | "rtl";
 }
+interface Location {
+  id: string;
+  name: string;
+  type: "city" | "province" | "country" | "continent" | "global";
+  parentId?: string;
+}
+
 interface ProductRecommendationsProps {
   title?: string;
   industries?: string[];
   products?: Product[];
   currentLanguage?: Language;
+  selectedLocation?: Location;
+  onLocationChange?: (location: Location) => void;
 }
 
 const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
@@ -49,6 +58,13 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
     "Construction",
     "Automotive",
   ],
+  selectedLocation = {
+    id: "shiraz",
+    name: "شیراز",
+    type: "city",
+    parentId: "fars",
+  },
+  onLocationChange = () => {},
   products = [
     {
       id: "1",
@@ -134,9 +150,13 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
     <section className="py-16 px-4 md:px-8 bg-white">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">{title}</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            {selectedLocation.type === "global"
+              ? title
+              : `محصولات پیشنهادی از ${selectedLocation.name}`}
+          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Discover quality products from verified suppliers worldwide
+            کشف محصولات با کیفیت از تامین‌کنندگان تایید شده
           </p>
         </div>
 
