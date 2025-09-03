@@ -1,6 +1,11 @@
-import type { Todo, CreateTodoRequest, UpdateTodoRequest, TodosResponse } from "../types"
+import type {
+  Todo,
+  CreateTodoRequest,
+  UpdateTodoRequest,
+  TodosResponse,
+} from "../types";
 
-const API_BASE = "https://dummyjson.com"
+const API_BASE = "https://dummyjson.com";
 
 const apiRequest = async (url: string, options?: RequestInit) => {
   const response = await fetch(url, {
@@ -9,18 +14,18 @@ const apiRequest = async (url: string, options?: RequestInit) => {
       "Content-Type": "application/json",
       ...options?.headers,
     },
-  })
+  });
 
   if (!response.ok) {
-    throw new Error(`API Error: ${response.status} ${response.statusText}`)
+    throw new Error(`API Error: ${response.status} ${response.statusText}`);
   }
 
-  return response.json()
-}
+  return response.json();
+};
 
 export const todosApi = {
   getTodos: async (): Promise<TodosResponse> => {
-    return apiRequest(`${API_BASE}/todos?limit=20&skip=0`)
+    return apiRequest(`${API_BASE}/todos?limit=20&skip=0`);
   },
 
   // Create a new todo
@@ -28,7 +33,7 @@ export const todosApi = {
     return apiRequest(`${API_BASE}/todos/add`, {
       method: "POST",
       body: JSON.stringify(todo),
-    })
+    });
   },
 
   // Update a todo
@@ -36,13 +41,15 @@ export const todosApi = {
     return apiRequest(`${API_BASE}/todos/${id}`, {
       method: "PUT",
       body: JSON.stringify(updates),
-    })
+    });
   },
 
   // Delete a todo
-  deleteTodo: async (id: number): Promise<{ id: number; isDeleted: boolean }> => {
+  deleteTodo: async (
+    id: number,
+  ): Promise<{ id: number; isDeleted: boolean }> => {
     return apiRequest(`${API_BASE}/todos/${id}`, {
       method: "DELETE",
-    })
+    });
   },
-}
+};
