@@ -87,7 +87,7 @@ const BuyingRequests = ({
   },
   onLocationChange = () => {},
 }: BuyingRequestsProps) => {
-  const [selectedLocation, setSelectedLocation] = useState("شهر من");
+ /* const [selectedLocation, setSelectedLocation] = useState("شهر من");*/
 
   const t =
     translations[currentLanguage.code as keyof typeof translations] ||
@@ -229,7 +229,7 @@ const BuyingRequests = ({
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <Tabs
+          {/*<Tabs
             defaultValue="All"
             value={selectedLocation}
             onValueChange={setSelectedLocation}
@@ -246,7 +246,7 @@ const BuyingRequests = ({
                 </TabsTrigger>
               ))}
             </TabsList>
-          </Tabs>
+          </Tabs>*/}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

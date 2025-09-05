@@ -235,7 +235,7 @@ const HeroSection = ({
     },
     fa: {
       connect: "بارتون، پلتفرم خرید و فروش عمده",
-      discover: "بازار خرید و فروش محلی تا بین المللی",
+      discover: "پوشش بازار محلی تا بین المللی",
       tagline: "درباره بارتون بیاموزید",
       searchPlaceholder: "دنبال چه چیزی هستید...",
       search: "جستجو",
@@ -244,8 +244,8 @@ const HeroSection = ({
       categories: "همه دسته‌بندی‌ها",
       suppliers: "فروشندگان",
       buyers: "خریداران",
-      about: "درباره ما",
-      signIn: "ورود",
+      about: "بازاریابان",
+      signIn: "ورود | ثبت نام",
       joinFree: "ثبت نام",
       help: "مرکز راهنمایی",
       appDownload: "اپ و موبایل",
@@ -296,7 +296,7 @@ const HeroSection = ({
       categories: "جميع الفئات",
       suppliers: "اختيارات مميزة",
       buyers: "حماية المشتري",
-      about: "مركز المشتري",
+      about: "بازاریابان",
       signIn: "تسجيل الدخول",
       joinFree: "انضم مجاناً",
       help: "مركز المساعدة",
@@ -370,7 +370,7 @@ const HeroSection = ({
             className={`flex items-center justify-between ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
           >
             <div
-              className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-6" : "space-x-6"}`}
+                className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-6" : "space-x-6"}`}
             >
               <a href="#" className="hover:text-orange-400 transition">
                 پیامها
@@ -381,9 +381,12 @@ const HeroSection = ({
               <a href="#" className="hover:text-orange-400 transition">
                 {t.buyers}
               </a>
+              <a href="#" className="hover:text-orange-400 transition">
+                {t.about}
+              </a>
             </div>
             <div
-              className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-4" : "space-x-4"}`}
+                className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-4" : "space-x-4"}`}
             >
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -467,9 +470,9 @@ const HeroSection = ({
                       {t.signIn}
                     </Button>
                   </Link>
-                  <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                 {/* <Button className="bg-orange-500 hover:bg-orange-600 text-white">
                     {t.joinFree}
-                  </Button>
+                  </Button>*/}
                 </div>
               </div>
             </header>
@@ -512,12 +515,12 @@ const HeroSection = ({
           {/* CTA Buttons + متن بالایی */}
           <div className="text-center px-4 md:px-0 w-full max-w-5xl mx-auto">
             {/* عنوان */}
-            <h1 className="text-[16px] md:text-[23px] font-bold mb-3 md:mb-4 leading-tight">
+            <h1 className="text-[19px] md:text-[23px] font-bold mb-3 md:mb-4 leading-tight">
               {t.connect}
             </h1>
 
             {/* توضیح */}
-            <p className="text-base md:text-xl text-gray-300 mb-4 md:mb-6">
+            <p className="text-[20px] md:text-2xl text-gray-300 mb-4 md:mb-6">
               {t.discover}
             </p>
 

@@ -151,10 +151,10 @@ const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({
           dir={currentLanguage.direction}
       >
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">{t.title}</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900 ">{t.title}</h2>
          {/* <p className="text-gray-600 mb-12">{t.subtitle}</p>*/}
 
-          <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-8 gap-4 md:gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-8 gap-4 md:gap-6 max-w-6xl mx-auto mt-12">
             {categories.slice(0, 16).map((category) => (
                 <a
                     key={category.id}
