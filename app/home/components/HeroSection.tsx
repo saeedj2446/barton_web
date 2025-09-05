@@ -10,6 +10,9 @@ import {
   Package,
   Shield,
   MapPin,
+  Sun,
+  Moon,
+  Monitor,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
@@ -393,33 +396,64 @@ const HeroSection = ({
             <div
               className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-4" : "space-x-4"}`}
             >
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    className="flex items-center transition hover:text-orange-400
-                 focus:outline-none focus:ring-1 focus:ring-white focus:ring-opacity-40
-                 rounded-md px-3 py-1"
-                  >
-                    <Globe
-                      className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"}`}
-                    />
-                    {currentLanguage.name}
-                    <ChevronDown
-                      className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "mr-1" : "ml-1"}`}
-                    />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {languages.map((lang) => (
-                    <DropdownMenuItem
-                      key={lang.code}
-                      onClick={() => handleLanguageSelect(lang)}
+              <div className="flex items-center gap-4">
+                {/* Theme Toggle */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      className="flex items-center transition hover:text-orange-400
+                   focus:outline-none focus:ring-1 focus:ring-white focus:ring-opacity-40
+                   rounded-md px-3 py-1"
                     >
-                      {lang.name}
+                      <Monitor className="w-4 h-4" />
+                      <ChevronDown className="w-4 h-4 mr-1" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <Sun className="w-4 h-4 mr-2" />
+                      روز
                     </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    <DropdownMenuItem>
+                      <Moon className="w-4 h-4 mr-2" />
+                      شب
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Monitor className="w-4 h-4 mr-2" />
+                      سیستم
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Language Toggle */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      className="flex items-center transition hover:text-orange-400
+                   focus:outline-none focus:ring-1 focus:ring-white focus:ring-opacity-40
+                   rounded-md px-3 py-1"
+                    >
+                      <Globe
+                        className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "ml-1" : "mr-1"}`}
+                      />
+                      {currentLanguage.name}
+                      <ChevronDown
+                        className={`w-4 h-4 ${currentLanguage.direction === "rtl" ? "mr-1" : "ml-1"}`}
+                      />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {languages.map((lang) => (
+                      <DropdownMenuItem
+                        key={lang.code}
+                        onClick={() => handleLanguageSelect(lang)}
+                      >
+                        {lang.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
         </div>

@@ -58,7 +58,7 @@ const SpecializedServices = ({
       retailers: "Retailers",
     },
     fa: {
-      title: "سرویس‌های تخصصی لینکو",
+      title: `سرویسهای تخصصی پخش در ${selectedLocation.name}`,
       subtitle: "اتصال تامین‌کنندگان و خرده‌فروشان در صنایع تخصصی",
       viewService: "مشاهده سرویس",
       suppliers: "تامین‌کننده",
@@ -73,7 +73,7 @@ const SpecializedServices = ({
   const services: SpecializedService[] = [
     {
       id: "jewelry",
-      name: `طلا و جواهرات ${selectedLocation.name}`,
+      name: `پخش طلا و جواهرات ${selectedLocation.name}`,
       description: "اتصال تولیدکنندگان طلا و جواهرات به طلافروشی‌ها",
       icon: <Gem className="w-8 h-8" />,
       color: "text-yellow-600",
@@ -82,7 +82,7 @@ const SpecializedServices = ({
     },
     {
       id: "supermarket",
-      name: `سوپرمارکت و پخش ${selectedLocation.name}`,
+      name: `پخش سوپرمارکت و مواد غذایی ${selectedLocation.name}`,
       description:
         "اتصال شرکت‌های پخش به سوپرمارکت‌ها و فروشگاه‌های مواد غذایی",
       icon: <ShoppingCart className="w-8 h-8" />,
@@ -92,7 +92,7 @@ const SpecializedServices = ({
     },
     {
       id: "automotive",
-      name: `قطعات خودرو ${selectedLocation.name}`,
+      name: `پخش قطعات خودرو ${selectedLocation.name}`,
       description: "اتصال تولیدکنندگان قطعات خودرو به فروشگاه‌های قطعه‌فروشی",
       icon: <Car className="w-8 h-8" />,
       color: "text-blue-600",
@@ -101,8 +101,9 @@ const SpecializedServices = ({
     },
     {
       id: "cosmetics",
-      name: `لوازم آرایشی ${selectedLocation.name}`,
-      description: "اتصال برندهای آرایشی به آرایشگاه‌ها و فروشگاه‌های زیبایی",
+      name: `پخش لوازم آرایشی ${selectedLocation.name}`,
+      description:
+        "اتصال برندهای آرایشی به آرایشگاه‌ها، خرده‌فروشان و سایر اصناف",
       icon: <Shirt className="w-8 h-8" />,
       color: "text-pink-600",
       supplierCount: 150,
@@ -110,7 +111,7 @@ const SpecializedServices = ({
     },
     {
       id: "restaurant",
-      name: `رستوران و تجهیزات ${selectedLocation.name}`,
+      name: `پخش رستوران و تجهیزات ${selectedLocation.name}`,
       description: "اتصال تامین‌کنندگان مواد غذایی و تجهیزات به رستوران‌ها",
       icon: <Utensils className="w-8 h-8" />,
       color: "text-orange-600",
@@ -119,7 +120,7 @@ const SpecializedServices = ({
     },
     {
       id: "electronics",
-      name: `الکترونیک و موبایل ${selectedLocation.name}`,
+      name: `پخش الکترونیک و موبایل ${selectedLocation.name}`,
       description:
         "اتصال وارد‌کنندگان الکترونیک به فروشگاه‌های موبایل و لپ‌تاپ",
       icon: <Smartphone className="w-8 h-8" />,
@@ -129,7 +130,7 @@ const SpecializedServices = ({
     },
     {
       id: "home-appliances",
-      name: `لوازم خانگی ${selectedLocation.name}`,
+      name: `پخش لوازم خانگی ${selectedLocation.name}`,
       description: "اتصال تولیدکنندگان لوازم خانگی به نمایندگی‌ها و فروشگاه‌ها",
       icon: <Home className="w-8 h-8" />,
       color: "text-indigo-600",
@@ -138,7 +139,7 @@ const SpecializedServices = ({
     },
     {
       id: "medical",
-      name: `تجهیزات پزشکی ${selectedLocation.name}`,
+      name: `پخش تجهیزات پزشکی ${selectedLocation.name}`,
       description:
         "اتصال تامین‌کنندگان تجهیزات پزشکی به داروخانه‌ها و کلینیک‌ها",
       icon: <Stethoscope className="w-8 h-8" />,

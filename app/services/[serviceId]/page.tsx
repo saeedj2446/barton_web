@@ -117,7 +117,7 @@ export default function ServicePage() {
   const servicesData: Record<string, ServiceData> = {
     jewelry: {
       id: "jewelry",
-      name: "طلا و جواهرات",
+      name: "پخش طلا و جواهرات",
       description: "اتصال تولیدکنندگان طلا و جواهرات به طلافروشی‌ها",
       icon: <Gem className="w-8 h-8" />,
       color: "text-yellow-600",
@@ -127,8 +127,9 @@ export default function ServicePage() {
     },
     cosmetics: {
       id: "cosmetics",
-      name: "لوازم آرایشی",
-      description: "اتصال برندهای آرایشی به آرایشگاه‌ها و فروشگاه‌های زیبایی",
+      name: "پخش لوازم آرایشی",
+      description:
+        "اتصال برندهای آرایشی به آرایشگاه‌ها، خرده‌فروشان و سایر اصناف",
       icon: <Shirt className="w-8 h-8" />,
       color: "text-pink-600",
       supplierCount: 150,
@@ -139,11 +140,16 @@ export default function ServicePage() {
         "عطر",
         "لوازم آرایشگاهی",
         "ناخن",
+        "خرده‌فروشی",
+        "آرایشگاه",
+        "سالن زیبایی",
+        "بنکداری",
+        "سایر اصناف",
       ],
     },
     automotive: {
       id: "automotive",
-      name: "قطعات خودرو",
+      name: "پخش قطعات خودرو",
       description: "اتصال تولیدکنندگان قطعات خودرو به فروشگاه‌های قطعه‌فروشی",
       icon: <Car className="w-8 h-8" />,
       color: "text-blue-600",
@@ -411,29 +417,102 @@ export default function ServicePage() {
     <div className="min-h-screen bg-gray-50 rtl" dir="rtl">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div
-                className={`p-3 rounded-full bg-gray-100 ${currentService.color}`}
+        <div className="container mx-auto px-4 py-4 md:py-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-center gap-4">
+              <div className="flex items-center gap-4">
+                <div
+                  className={`p-3 rounded-full bg-gray-100 ${currentService.color}`}
+                >
+                  {currentService.icon}
+                </div>
+                <div>
+                  <h1 className="text-xl md:text-3xl font-bold text-gray-900">
+                    {currentService.name} {selectedLocation.name}
+                  </h1>
+                  <p className="text-sm md:text-lg text-gray-600 mt-1">
+                    {currentService.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Location Selector */}
+              <Dialog
+                open={isLocationModalOpen}
+                onOpenChange={setIsLocationModalOpen}
               >
-                {currentService.icon}
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">
-                  {currentService.name}
-                </h1>
-                <p className="text-lg text-gray-600 mt-1">
-                  {currentService.description}
-                </p>
-              </div>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2 px-4 py-2 border-orange-500 text-orange-600 hover:bg-orange-50 w-fit"
+                  >
+                    <MapPin className="w-4 h-4" />
+                    <span className="text-sm">
+                      تغییر موقعیت: {selectedLocation.name}
+                    </span>
+                    <ChevronDown className="w-4 h-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl" dir="rtl">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-orange-500" />
+                      انتخاب موقعیت جغرافیایی
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">کشور</label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="انتخاب کشور" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {locationData.countries.map((country) => (
+                            <SelectItem key={country.id} value={country.id}>
+                              {country.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">استان</label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="انتخاب استان" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="fars">فارس</SelectItem>
+                          <SelectItem value="tehran">تهران</SelectItem>
+                          <SelectItem value="isfahan">اصفهان</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">شهر</label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="انتخاب شهر" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="shiraz">شیراز</SelectItem>
+                          <SelectItem value="tehran-city">تهران</SelectItem>
+                          <SelectItem value="isfahan-city">اصفهان</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
-            <div className="flex gap-3">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white text-sm md:text-base">
                 <UserPlus className="w-4 h-4 ml-2" />
                 عضویت به عنوان تامین‌کننده
               </Button>
-              <Button className="bg-green-600 hover:bg-green-700 text-white">
+              <Button className="bg-green-600 hover:bg-green-700 text-white text-sm md:text-base">
                 <Store className="w-4 h-4 ml-2" />
                 عضویت به عنوان خرده‌فروش
               </Button>
@@ -475,78 +554,6 @@ export default function ServicePage() {
         </div>
       </div>
 
-      {/* Location Selector */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-center">
-          <Dialog
-            open={isLocationModalOpen}
-            onOpenChange={setIsLocationModalOpen}
-          >
-            <DialogTrigger asChild>
-              <Button
-                variant="outline"
-                className="flex items-center gap-2 px-6 py-3 border-orange-500 text-orange-600 hover:bg-orange-50"
-              >
-                <MapPin className="w-4 h-4" />
-                <span>موقعیت: {selectedLocation.name}</span>
-                <ChevronDown className="w-4 h-4" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl" dir="rtl">
-              <DialogHeader>
-                <DialogTitle className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-orange-500" />
-                  انتخاب موقعیت جغرافیایی
-                </DialogTitle>
-              </DialogHeader>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">کشور</label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="انتخاب کشور" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {locationData.countries.map((country) => (
-                        <SelectItem key={country.id} value={country.id}>
-                          {country.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">استان</label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="انتخاب استان" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="fars">فارس</SelectItem>
-                      <SelectItem value="tehran">تهران</SelectItem>
-                      <SelectItem value="isfahan">اصفهان</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">شهر</label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="انتخاب شهر" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="shiraz">شیراز</SelectItem>
-                      <SelectItem value="tehran-city">تهران</SelectItem>
-                      <SelectItem value="isfahan-city">اصفهان</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-
       {/* Tabs */}
       <div className="container mx-auto px-4 py-6">
         <Tabs
@@ -554,47 +561,53 @@ export default function ServicePage() {
           onValueChange={(value) => setActiveTab(value as any)}
           className="w-full"
         >
-          <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="suppliers" className="flex items-center gap-2">
+          <TabsList className="grid w-full grid-cols-3 mb-4 md:mb-6 h-auto">
+            <TabsTrigger
+              value="suppliers"
+              className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-2 md:p-3 text-xs md:text-sm"
+            >
               <Building className="w-4 h-4" />
-              تامین‌کنندگان ({formatNumber(currentService.supplierCount)})
+              <span className="hidden md:inline">
+                تامین‌کنندگان ({formatNumber(currentService.supplierCount)})
+              </span>
+              <span className="md:hidden">تامین‌کنندگان</span>
             </TabsTrigger>
-            <TabsTrigger value="retailers" className="flex items-center gap-2">
+            <TabsTrigger
+              value="retailers"
+              className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-2 md:p-3 text-xs md:text-sm"
+            >
               <Store className="w-4 h-4" />
-              خرده‌فروشان ({formatNumber(currentService.retailerCount)})
+              <span className="hidden md:inline">
+                خرده‌فروشان ({formatNumber(currentService.retailerCount)})
+              </span>
+              <span className="md:hidden">خرده‌فروشان</span>
             </TabsTrigger>
-            <TabsTrigger value="products" className="flex items-center gap-2">
+            <TabsTrigger
+              value="products"
+              className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-2 md:p-3 text-xs md:text-sm"
+            >
               <Package className="w-4 h-4" />
-              محصولات ({formatNumber(products.length)})
+              <span className="hidden md:inline">
+                محصولات ({formatNumber(products.length)})
+              </span>
+              <span className="md:hidden">محصولات</span>
             </TabsTrigger>
           </TabsList>
 
           {/* Filters */}
-          <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-white rounded-lg shadow-sm border p-4 md:p-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="relative">
                 <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   placeholder="جستجو..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pr-10 h-12"
+                  className="pr-10 h-10 md:h-12"
                 />
               </div>
-              <Select value={locationFilter} onValueChange={setLocationFilter}>
-                <SelectTrigger className="h-12">
-                  <SelectValue placeholder="همه شهرها" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">همه شهرها</SelectItem>
-                  <SelectItem value="tehran">تهران</SelectItem>
-                  <SelectItem value="isfahan">اصفهان</SelectItem>
-                  <SelectItem value="shiraz">شیراز</SelectItem>
-                  <SelectItem value="mashhad">مشهد</SelectItem>
-                </SelectContent>
-              </Select>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="h-12">
+                <SelectTrigger className="h-10 md:h-12">
                   <SelectValue placeholder="همه دسته‌بندی‌ها" />
                 </SelectTrigger>
                 <SelectContent>
@@ -606,7 +619,7 @@ export default function ServicePage() {
                   ))}
                 </SelectContent>
               </Select>
-              <Button className="h-12 bg-orange-600 hover:bg-orange-700">
+              <Button className="h-10 md:h-12 bg-orange-600 hover:bg-orange-700">
                 <Filter className="w-4 h-4 ml-2" />
                 اعمال فیلتر
               </Button>
@@ -615,7 +628,7 @@ export default function ServicePage() {
 
           {/* Suppliers Tab */}
           <TabsContent value="suppliers">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {suppliers.map((supplier) => (
                 <Card
                   key={supplier.id}
@@ -680,7 +693,7 @@ export default function ServicePage() {
 
           {/* Retailers Tab */}
           <TabsContent value="retailers">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {retailers.map((retailer) => (
                 <Card
                   key={retailer.id}
@@ -737,7 +750,7 @@ export default function ServicePage() {
 
           {/* Products Tab */}
           <TabsContent value="products">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {products.map((product) => (
                 <Card
                   key={product.id}
