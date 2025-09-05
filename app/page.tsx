@@ -117,9 +117,6 @@ export default function HomePage() {
       {/* Personalized Product Recommendations */}
       <div className="py-12">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8">
-            {t.recommendedForYou}
-          </h2>
           <ProductRecommendations
             currentLanguage={currentLanguage}
             selectedLocation={selectedLocation}

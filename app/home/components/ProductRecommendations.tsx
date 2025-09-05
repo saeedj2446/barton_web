@@ -147,7 +147,7 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
   const filteredProducts = products;
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-white">
+    <section className="py-10 px-4 md:px-8 bg-white">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">
@@ -156,7 +156,7 @@ const ProductRecommendations: React.FC<ProductRecommendationsProps> = ({
               : `محصولات پیشنهادی از ${selectedLocation.name}`}
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            کشف محصولات با کیفیت از تامین‌کنندگان تایید شده
+            کشف محصولات با کیفیت از تامین‌کنندگان تایید شده شیراز
           </p>
         </div>
 

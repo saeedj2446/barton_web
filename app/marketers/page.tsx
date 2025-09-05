@@ -357,7 +357,7 @@ export default function MarketersPage() {
                 <SelectValue placeholder={translations.allCountries} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">{translations.allCountries}</SelectItem>
+                <SelectItem value="allCountries">{translations.allCountries}</SelectItem>
                 {countries.map((country) => (
                   <SelectItem key={country} value={country}>
                     {country}
@@ -378,7 +378,7 @@ export default function MarketersPage() {
                 <SelectValue placeholder={translations.allProvinces} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">{translations.allProvinces}</SelectItem>
+                <SelectItem value="allProvinces">{translations.allProvinces}</SelectItem>
                 {provinces.map((province) => (
                   <SelectItem key={province} value={province}>
                     {province}
@@ -399,7 +399,7 @@ export default function MarketersPage() {
                 <SelectValue placeholder={translations.allCities} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">{translations.allCities}</SelectItem>
+                <SelectItem value="allCities">{translations.allCities}</SelectItem>
                 {cities.map((city) => (
                   <SelectItem key={city} value={city}>
                     {city}
