@@ -9,6 +9,7 @@ import VipSellers from "@/app/home/components/VipSellers";
 import BuyingRequests from "@/app/home/components/BuyingRequests";
 import TrustSection from "@/app/home/components/TrustSection";
 import Marketers from "@/app/home/components/Marketers";
+import SpecializedServices from "@/app/home/components/SpecializedServices";
 import Link from "next/link";
 
 import {
@@ -92,6 +93,9 @@ export default function HomePage() {
 
       {/* Popular Categories Section */}
       <CategoryShowcase currentLanguage={currentLanguage} />
+
+      {/* Specialized Services Section */}
+      <SpecializedServices currentLanguage={currentLanguage} />
 
       {/* VIP Sellers Section */}
       <VipSellers
