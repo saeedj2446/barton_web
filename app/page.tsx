@@ -8,6 +8,7 @@ import ProductRecommendations from "@/app/home/components/ProductRecommendations
 import VipSellers from "@/app/home/components/VipSellers";
 import BuyingRequests from "@/app/home/components/BuyingRequests";
 import TrustSection from "@/app/home/components/TrustSection";
+import Marketers from "@/app/home/components/Marketers";
 import Link from "next/link";
 
 import {
@@ -101,6 +102,13 @@ export default function HomePage() {
 
       {/* Buying Requests Section */}
       <BuyingRequests
+        currentLanguage={currentLanguage}
+        selectedLocation={selectedLocation}
+        onLocationChange={setSelectedLocation}
+      />
+
+      {/* Marketers Section */}
+      <Marketers
         currentLanguage={currentLanguage}
         selectedLocation={selectedLocation}
         onLocationChange={setSelectedLocation}

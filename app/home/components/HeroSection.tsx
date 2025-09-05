@@ -20,6 +20,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
+import LocationModal from "./LocationModal";
 
 interface Language {
   name: string;
@@ -53,6 +54,7 @@ const HeroSection = ({
   onLocationChange = () => {},
 }: HeroSectionProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
   // Location data for Iran and UAE
   const locationData = {
@@ -370,7 +372,7 @@ const HeroSection = ({
             className={`flex items-center justify-between ${currentLanguage.direction === "rtl" ? "flex-row-reverse" : ""}`}
           >
             <div
-                className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-6" : "space-x-6"}`}
+              className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-6" : "space-x-6"}`}
             >
               <a href="#" className="hover:text-orange-400 transition">
                 پیامها
@@ -381,12 +383,15 @@ const HeroSection = ({
               <a href="#" className="hover:text-orange-400 transition">
                 {t.buyers}
               </a>
+              <a href="/marketers" className="hover:text-orange-400 transition">
+                بازاریابان
+              </a>
               <a href="#" className="hover:text-orange-400 transition">
                 {t.about}
               </a>
             </div>
             <div
-                className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-4" : "space-x-4"}`}
+              className={`flex items-center ${currentLanguage.direction === "rtl" ? "space-x-reverse space-x-4" : "space-x-4"}`}
             >
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -470,7 +475,7 @@ const HeroSection = ({
                       {t.signIn}
                     </Button>
                   </Link>
-                 {/* <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                  {/* <Button className="bg-orange-500 hover:bg-orange-600 text-white">
                     {t.joinFree}
                   </Button>*/}
                 </div>
@@ -531,40 +536,16 @@ const HeroSection = ({
                   {/* Location selector and search box */}
                   <div className="relative flex-1 flex gap-2">
                     {/* Location Selector */}
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <button className="flex items-center gap-2 px-4 h-12 bg-white border border-orange-500 rounded-md hover:bg-orange-50 transition-colors">
-                          <MapPin className="w-4 h-4 text-orange-500" />
-                          <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                            {selectedLocation.name}
-                          </span>
-                          <ChevronDown className="w-4 h-4 text-gray-400" />
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-56">
-                        {getAllLocations().map((location) => (
-                          <DropdownMenuItem
-                            key={location.id}
-                            onClick={() => handleLocationSelect(location)}
-                            className={
-                              selectedLocation.id === location.id
-                                ? "bg-orange-50"
-                                : ""
-                            }
-                          >
-                            <div className="flex items-center gap-2">
-                              <MapPin className="w-4 h-4 text-gray-400" />
-                              <span>{location.name}</span>
-                              {location.type !== "global" && (
-                                <span className="text-xs text-gray-400">
-                                  ({location.type})
-                                </span>
-                              )}
-                            </div>
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <button
+                      className="flex items-center gap-2 px-4 h-12 bg-white border border-orange-500 rounded-md hover:bg-orange-50 transition-colors"
+                      onClick={() => setIsLocationModalOpen(true)}
+                    >
+                      <MapPin className="w-4 h-4 text-orange-500" />
+                      <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                        {selectedLocation.name}
+                      </span>
+                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                    </button>
 
                     {/* Search Box */}
                     <div className="relative flex-1">
@@ -712,6 +693,15 @@ const HeroSection = ({
           </a>
         </div>
       </div>
+
+      {/* Location Modal */}
+      <LocationModal
+        isOpen={isLocationModalOpen}
+        onClose={() => setIsLocationModalOpen(false)}
+        selectedLocation={selectedLocation}
+        onLocationChange={onLocationChange}
+        currentLanguage={currentLanguage}
+      />
     </div>
   );
 };
