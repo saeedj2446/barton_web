@@ -95,37 +95,7 @@ export default function HomePage() {
       {/* Popular Categories Section */}
       <CategoryShowcase currentLanguage={currentLanguage} />
 
-      {/* Specialized Services Section */}
-      <SpecializedServices currentLanguage={currentLanguage} />
-
-      {/* Transportation Section */}
-      <TransportationSection
-        currentLanguage={currentLanguage}
-        selectedLocation={selectedLocation}
-      />
-
-      {/* VIP Sellers Section */}
-      <VipSellers
-        currentLanguage={currentLanguage}
-        selectedLocation={selectedLocation}
-        onLocationChange={setSelectedLocation}
-      />
-
-      {/* Buying Requests Section */}
-      <BuyingRequests
-        currentLanguage={currentLanguage}
-        selectedLocation={selectedLocation}
-        onLocationChange={setSelectedLocation}
-      />
-
-      {/* Marketers Section */}
-      <Marketers
-        currentLanguage={currentLanguage}
-        selectedLocation={selectedLocation}
-        onLocationChange={setSelectedLocation}
-      />
-
-      {/* Personalized Product Recommendations */}
+      {/* 1. Personalized Product Recommendations */}
       <div className="py-12">
         <div className="container mx-auto px-4">
           <ProductRecommendations
@@ -136,7 +106,37 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Trust Elements Section */}
+      {/* 2. Buying Requests Section */}
+      <BuyingRequests
+        currentLanguage={currentLanguage}
+        selectedLocation={selectedLocation}
+        onLocationChange={setSelectedLocation}
+      />
+
+      {/* 3. VIP Sellers Section */}
+      <VipSellers
+        currentLanguage={currentLanguage}
+        selectedLocation={selectedLocation}
+        onLocationChange={setSelectedLocation}
+      />
+
+      {/* 4. Specialized Services Section */}
+      <SpecializedServices currentLanguage={currentLanguage} />
+
+      {/* 5. Transportation Section */}
+      <TransportationSection
+        currentLanguage={currentLanguage}
+        selectedLocation={selectedLocation}
+      />
+
+      {/* 6. Marketers Section */}
+      <Marketers
+        currentLanguage={currentLanguage}
+        selectedLocation={selectedLocation}
+        onLocationChange={setSelectedLocation}
+      />
+
+      {/* 7. Trust Elements Section */}
       <div className="container mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold text-center mb-8">
           {t.whyChooseBarton}

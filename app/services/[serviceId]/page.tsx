@@ -168,6 +168,106 @@ export default function ServicePage() {
     deadline: "",
   });
 
+  // Mock data for buying requests
+  const buyingRequests: BuyingRequest[] = [
+    {
+      id: "1",
+      title: "نیاز به رژ لب مات با کیفیت",
+      description:
+        "به دنبال تامین‌کننده رژ لب مات با کیفیت بالا و قیمت مناسب هستیم",
+      category: "آرایش صورت",
+      quantity: 500,
+      budget: 25000000,
+      deadline: "۱۴۰۳/۰۲/۱۵",
+      location: "تهران",
+      postedDate: "۳ روز پیش",
+      urgent: true,
+      requesterName: "فروشگاه زیبایی نور",
+      requesterRating: 4.8,
+      responses: 12,
+    },
+    {
+      id: "2",
+      title: "خرید عمده کرم مرطوب کننده",
+      description:
+        "نیاز به کرم مرطوب کننده مناسب انواع پوست برای فروشگاه زنجیره‌ای",
+      category: "مراقبت پوست",
+      quantity: 1000,
+      budget: 45000000,
+      deadline: "۱۴۰۳/۰۲/۲۰",
+      location: "اصفهان",
+      postedDate: "۱ روز پیش",
+      urgent: false,
+      requesterName: "آرایشگاه ملکه",
+      requesterRating: 4.9,
+      responses: 8,
+    },
+    {
+      id: "3",
+      title: "تامین عطر زنانه برندهای معتبر",
+      description: "به دنبال تامین‌کننده عطرهای زنانه با برندهای معتبر و اصل",
+      category: "عطر",
+      quantity: 200,
+      budget: 80000000,
+      deadline: "۱۴۰۳/۰۳/۰۱",
+      location: "شیراز",
+      postedDate: "۵ روز پیش",
+      urgent: false,
+      requesterName: "سالن زیبایی پریا",
+      requesterRating: 4.6,
+      responses: 15,
+    },
+  ];
+
+  // Mock data for advertisements
+  const advertisements: Advertisement[] = [
+    {
+      id: "1",
+      title: "محصولات آرایشی پارس",
+      description: "بهترین کیفیت، بهترین قیمت",
+      image:
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&q=80",
+      company: "شرکت آرایشی پارس",
+      category: "آرایشی",
+      link: "/suppliers/pars-cosmetics",
+    },
+    {
+      id: "2",
+      title: "طلای خالص ۱۸ عیار",
+      description: "مستقیم از کارخانه به دست شما",
+      image:
+        "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80",
+      company: "طلای کیهان",
+      category: "طلا",
+      link: "/suppliers/keyhan-gold",
+    },
+    {
+      id: "3",
+      title: "نقره دست‌ساز اصفهان",
+      description: "هنر اصیل ایرانی با کیفیت بین‌المللی",
+      image:
+        "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=400&q=80",
+      company: "نقره‌کاری اصفهان",
+      category: "نقره",
+      link: "/suppliers/isfahan-silver",
+    },
+  ];
+
+  const handleNewBuyingRequestSubmit = () => {
+    // Handle form submission logic here
+    console.log("New buying request:", newBuyingRequest);
+    setIsNewBuyingRequestModalOpen(false);
+    // Reset form
+    setNewBuyingRequest({
+      title: "",
+      description: "",
+      category: "",
+      quantity: "",
+      budget: "",
+      deadline: "",
+    });
+  };
+
   const servicesData: Record<string, ServiceData> = {
     jewelry: {
       id: "jewelry",

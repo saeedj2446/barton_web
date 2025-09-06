@@ -176,12 +176,12 @@ const TransportationSection = ({
               className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0 shadow-lg overflow-hidden"
             >
               <CardContent className="p-0">
-                {/* Driver Image */}
+                {/* Vehicle Image */}
                 <div className="relative">
                   <img
-                    src={driver.image}
-                    alt={driver.name}
-                    className="w-full h-32 object-cover bg-gray-100"
+                    src={driver.vehicleImage}
+                    alt={driver.vehicleType}
+                    className="w-full h-48 object-cover"
                   />
                   {driver.verified && (
                     <Badge className="absolute top-2 right-2 bg-green-500 text-white text-xs">
@@ -217,20 +217,12 @@ const TransportationSection = ({
 
                   {/* Vehicle Info */}
                   <div className="mb-4">
-                    <div className="relative mb-3">
-                      <img
-                        src={driver.vehicleImage}
-                        alt={driver.vehicleType}
-                        className="w-full h-20 object-cover rounded-md"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-md" />
-                      <div className="absolute bottom-1 left-2 right-2 text-white text-xs">
-                        <div className="font-semibold">
-                          {driver.vehicleType}
-                        </div>
-                      </div>
+                    <div className="flex items-center justify-between text-sm mb-2">
+                      <span className="text-gray-600">نوع خودرو:</span>
+                      <span className="font-semibold text-blue-600">
+                        {driver.vehicleType}
+                      </span>
                     </div>
-
                     <div className="flex items-center justify-between text-sm mb-2">
                       <div className="flex items-center">
                         <Package className="w-4 h-4 text-blue-600 ml-1" />
