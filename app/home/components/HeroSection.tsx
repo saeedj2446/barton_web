@@ -10,10 +10,8 @@ import {
   Package,
   Shield,
   MapPin,
-  Sun,
-  Moon,
-  Monitor,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
@@ -398,32 +396,7 @@ const HeroSection = ({
             >
               <div className="flex items-center gap-4">
                 {/* Theme Toggle */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
-                      className="flex items-center transition hover:text-orange-400
-                   focus:outline-none focus:ring-1 focus:ring-white focus:ring-opacity-40
-                   rounded-md px-3 py-1"
-                    >
-                      <Monitor className="w-4 h-4" />
-                      <ChevronDown className="w-4 h-4 mr-1" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>
-                      <Sun className="w-4 h-4 mr-2" />
-                      روز
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Moon className="w-4 h-4 mr-2" />
-                      شب
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Monitor className="w-4 h-4 mr-2" />
-                      سیستم
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <ThemeToggle />
 
                 {/* Language Toggle */}
                 <DropdownMenu>
