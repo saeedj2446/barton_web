@@ -25,6 +25,11 @@ import {
   Heart,
   Eye,
   MessageCircle,
+  Plus,
+  Calendar,
+  DollarSign,
+  Clock,
+  AlertCircle,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -45,6 +50,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 
 interface ServiceData {
@@ -98,16 +111,45 @@ interface Product {
   featured: boolean;
 }
 
+interface BuyingRequest {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  quantity: number;
+  budget: number;
+  deadline: string;
+  location: string;
+  postedDate: string;
+  urgent: boolean;
+  requesterName: string;
+  requesterRating: number;
+  responses: number;
+}
+
+interface Advertisement {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  company: string;
+  category: string;
+  link: string;
+}
+
 export default function ServicePage() {
   const params = useParams();
   const serviceId = params.serviceId as string;
   const [activeTab, setActiveTab] = useState<
-    "suppliers" | "retailers" | "products"
+    "suppliers" | "retailers" | "products" | "buying-requests"
   >("suppliers");
   const [searchQuery, setSearchQuery] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [businessTypeFilter, setBusinessTypeFilter] = useState("");
+  const [supplierTypeFilter, setSupplierTypeFilter] = useState("");
+  const [supplierLocationFilter, setSupplierLocationFilter] = useState("");
+  const [retailerLocationFilter, setRetailerLocationFilter] = useState("");
   const [selectedLocation, setSelectedLocation] = useState({
     id: "shiraz",
     name: "شیراز",
@@ -115,6 +157,16 @@ export default function ServicePage() {
     parentId: "fars",
   });
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [isNewBuyingRequestModalOpen, setIsNewBuyingRequestModalOpen] =
+    useState(false);
+  const [newBuyingRequest, setNewBuyingRequest] = useState({
+    title: "",
+    description: "",
+    category: "",
+    quantity: "",
+    budget: "",
+    deadline: "",
+  });
 
   const servicesData: Record<string, ServiceData> = {
     jewelry: {
@@ -581,7 +633,7 @@ export default function ServicePage() {
             onValueChange={(value) => setActiveTab(value as any)}
             className="w-full"
           >
-            <TabsList className="grid w-full grid-cols-3 bg-gray-50 rounded-t-lg border-b h-auto p-1">
+            <TabsList className="grid w-full grid-cols-4 bg-gray-50 rounded-t-lg border-b h-auto p-1">
               <TabsTrigger
                 value="suppliers"
                 className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-3 md:p-4 text-xs md:text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:border-b-2 data-[state=active]:border-orange-500 rounded-md"
@@ -612,6 +664,16 @@ export default function ServicePage() {
                 </span>
                 <span className="md:hidden">محصولات</span>
               </TabsTrigger>
+              <TabsTrigger
+                value="buying-requests"
+                className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-3 md:p-4 text-xs md:text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:border-b-2 data-[state=active]:border-orange-500 rounded-md"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span className="hidden md:inline">
+                  درخواست‌های خرید ({formatNumber(buyingRequests.length)})
+                </span>
+                <span className="md:hidden">درخواست‌ها</span>
+              </TabsTrigger>
             </TabsList>
 
             {/* Filters */}
@@ -626,38 +688,155 @@ export default function ServicePage() {
                     className="pr-10 h-10 md:h-12"
                   />
                 </div>
-                <Select
-                  value={categoryFilter}
-                  onValueChange={setCategoryFilter}
-                >
-                  <SelectTrigger className="h-10 md:h-12">
-                    <SelectValue placeholder="دسته‌بندی محصول" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">همه دسته‌بندی‌ها</SelectItem>
-                    {currentService.categories.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select
-                  value={businessTypeFilter}
-                  onValueChange={setBusinessTypeFilter}
-                >
-                  <SelectTrigger className="h-10 md:h-12">
-                    <SelectValue placeholder="نوع کسب‌وکار" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">همه اصناف</SelectItem>
-                    {currentService.businessTypes.map((businessType) => (
-                      <SelectItem key={businessType} value={businessType}>
-                        {businessType}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+
+                {/* Supplier Filters */}
+                {activeTab === "suppliers" && (
+                  <>
+                    <Select
+                      value={supplierLocationFilter}
+                      onValueChange={setSupplierLocationFilter}
+                    >
+                      <SelectTrigger className="h-10 md:h-12">
+                        <SelectValue placeholder="انتخاب موقعیت" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">همه موقعیت‌ها</SelectItem>
+                        <SelectItem value="tehran">تهران</SelectItem>
+                        <SelectItem value="isfahan">اصفهان</SelectItem>
+                        <SelectItem value="shiraz">شیراز</SelectItem>
+                        <SelectItem value="mashhad">مشهد</SelectItem>
+                        <SelectItem value="tabriz">تبریز</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={supplierTypeFilter}
+                      onValueChange={setSupplierTypeFilter}
+                    >
+                      <SelectTrigger className="h-10 md:h-12">
+                        <SelectValue placeholder="نوع تامین‌کننده" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">همه انواع</SelectItem>
+                        <SelectItem value="manufacturer">تولیدکننده</SelectItem>
+                        <SelectItem value="distributor">پخش‌کننده</SelectItem>
+                        <SelectItem value="importer">واردکننده</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
+
+                {/* Retailer Filters */}
+                {activeTab === "retailers" && (
+                  <>
+                    <Select
+                      value={retailerLocationFilter}
+                      onValueChange={setRetailerLocationFilter}
+                    >
+                      <SelectTrigger className="h-10 md:h-12">
+                        <SelectValue placeholder="انتخاب موقعیت" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">همه موقعیت‌ها</SelectItem>
+                        <SelectItem value="tehran">تهران</SelectItem>
+                        <SelectItem value="isfahan">اصفهان</SelectItem>
+                        <SelectItem value="shiraz">شیراز</SelectItem>
+                        <SelectItem value="mashhad">مشهد</SelectItem>
+                        <SelectItem value="tabriz">تبریز</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={businessTypeFilter}
+                      onValueChange={setBusinessTypeFilter}
+                    >
+                      <SelectTrigger className="h-10 md:h-12">
+                        <SelectValue placeholder="نوع کسب‌وکار" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">همه اصناف</SelectItem>
+                        {currentService.businessTypes.map((businessType) => (
+                          <SelectItem key={businessType} value={businessType}>
+                            {businessType}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
+
+                {/* Product Filters */}
+                {activeTab === "products" && (
+                  <>
+                    <Select
+                      value={categoryFilter}
+                      onValueChange={setCategoryFilter}
+                    >
+                      <SelectTrigger className="h-10 md:h-12">
+                        <SelectValue placeholder="دسته‌بندی محصول" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">همه دسته‌بندی‌ها</SelectItem>
+                        {currentService.categories.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={supplierLocationFilter}
+                      onValueChange={setSupplierLocationFilter}
+                    >
+                      <SelectTrigger className="h-10 md:h-12">
+                        <SelectValue placeholder="موقعیت تامین‌کننده" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">همه موقعیت‌ها</SelectItem>
+                        <SelectItem value="tehran">تهران</SelectItem>
+                        <SelectItem value="isfahan">اصفهان</SelectItem>
+                        <SelectItem value="shiraz">شیراز</SelectItem>
+                        <SelectItem value="mashhad">مشهد</SelectItem>
+                        <SelectItem value="tabriz">تبریز</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
+
+                {/* Buying Requests Filters */}
+                {activeTab === "buying-requests" && (
+                  <>
+                    <Select
+                      value={categoryFilter}
+                      onValueChange={setCategoryFilter}
+                    >
+                      <SelectTrigger className="h-10 md:h-12">
+                        <SelectValue placeholder="دسته‌بندی کالا" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">همه دسته‌بندی‌ها</SelectItem>
+                        {currentService.categories.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select>
+                      <SelectTrigger className="h-10 md:h-12">
+                        <SelectValue placeholder="مرتب‌سازی" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="newest">جدیدترین</SelectItem>
+                        <SelectItem value="urgent">فوری</SelectItem>
+                        <SelectItem value="budget-high">بودجه بالا</SelectItem>
+                        <SelectItem value="budget-low">بودجه پایین</SelectItem>
+                        <SelectItem value="deadline">
+                          نزدیک‌ترین مهلت
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
+
                 <Button className="h-10 md:h-12 bg-orange-600 hover:bg-orange-700">
                   <Filter className="w-4 h-4 ml-2" />
                   اعمال فیلتر
@@ -895,7 +1074,313 @@ export default function ServicePage() {
                 ))}
               </div>
             </TabsContent>
+
+            {/* Buying Requests Tab */}
+            <TabsContent value="buying-requests" className="p-4 md:p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-lg font-semibold">درخواست‌های خرید فعال</h3>
+                <Dialog
+                  open={isNewBuyingRequestModalOpen}
+                  onOpenChange={setIsNewBuyingRequestModalOpen}
+                >
+                  <DialogTrigger asChild>
+                    <Button className="bg-green-600 hover:bg-green-700 text-white">
+                      <Plus className="w-4 h-4 ml-2" />
+                      درخواست جدید
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl" dir="rtl">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-2">
+                        <Plus className="w-5 h-5 text-green-500" />
+                        ثبت درخواست خرید جدید
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">
+                          عنوان درخواست
+                        </label>
+                        <Input
+                          placeholder="عنوان درخواست خود را وارد کنید"
+                          value={newBuyingRequest.title}
+                          onChange={(e) =>
+                            setNewBuyingRequest({
+                              ...newBuyingRequest,
+                              title: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">
+                            دسته‌بندی
+                          </label>
+                          <Select
+                            value={newBuyingRequest.category}
+                            onValueChange={(value) =>
+                              setNewBuyingRequest({
+                                ...newBuyingRequest,
+                                category: value,
+                              })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="انتخاب دسته‌بندی" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {currentService.categories.map((category) => (
+                                <SelectItem key={category} value={category}>
+                                  {category}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">
+                            تعداد مورد نیاز
+                          </label>
+                          <Input
+                            placeholder="تعداد"
+                            value={newBuyingRequest.quantity}
+                            onChange={(e) =>
+                              setNewBuyingRequest({
+                                ...newBuyingRequest,
+                                quantity: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">
+                            بودجه (تومان)
+                          </label>
+                          <Input
+                            placeholder="بودجه مورد نظر"
+                            value={newBuyingRequest.budget}
+                            onChange={(e) =>
+                              setNewBuyingRequest({
+                                ...newBuyingRequest,
+                                budget: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">
+                            مهلت تحویل
+                          </label>
+                          <Input
+                            type="date"
+                            value={newBuyingRequest.deadline}
+                            onChange={(e) =>
+                              setNewBuyingRequest({
+                                ...newBuyingRequest,
+                                deadline: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">
+                          توضیحات تکمیلی
+                        </label>
+                        <Textarea
+                          placeholder="توضیحات کاملی از نیاز خود ارائه دهید..."
+                          rows={4}
+                          value={newBuyingRequest.description}
+                          onChange={(e) =>
+                            setNewBuyingRequest({
+                              ...newBuyingRequest,
+                              description: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="flex gap-2 pt-4">
+                        <Button
+                          onClick={handleNewBuyingRequestSubmit}
+                          className="flex-1 bg-green-600 hover:bg-green-700"
+                        >
+                          ثبت درخواست
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => setIsNewBuyingRequestModalOpen(false)}
+                          className="flex-1"
+                        >
+                          انصراف
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                {buyingRequests.map((request) => (
+                  <Card
+                    key={request.id}
+                    className="hover:shadow-lg transition-shadow bg-white"
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="font-bold text-lg line-clamp-1">
+                              {request.title}
+                            </h3>
+                            {request.urgent && (
+                              <Badge className="bg-red-100 text-red-800 text-xs">
+                                <AlertCircle className="w-3 h-3 ml-1" />
+                                فوری
+                              </Badge>
+                            )}
+                          </div>
+                          <Badge variant="secondary" className="text-xs mb-3">
+                            {request.category}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      <p className="text-gray-600 text-sm line-clamp-2 mb-4">
+                        {request.description}
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+                        <div className="flex items-center gap-2">
+                          <Package className="w-4 h-4 text-blue-600" />
+                          <span className="text-gray-600">تعداد:</span>
+                          <span className="font-semibold">
+                            {formatNumber(request.quantity)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <DollarSign className="w-4 h-4 text-green-600" />
+                          <span className="text-gray-600">بودجه:</span>
+                          <span className="font-semibold text-green-600">
+                            {formatNumber(request.budget)} تومان
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-orange-600" />
+                          <span className="text-gray-600">مهلت:</span>
+                          <span className="font-semibold">
+                            {request.deadline}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-purple-600" />
+                          <span className="text-gray-600">موقعیت:</span>
+                          <span className="font-semibold">
+                            {request.location}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-4 border-t">
+                        <div className="flex items-center gap-4 text-sm">
+                          <div className="flex items-center">
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400 ml-1" />
+                            <span>{request.requesterRating}</span>
+                          </div>
+                          <div className="flex items-center text-gray-500">
+                            <MessageCircle className="w-4 h-4 ml-1" />
+                            <span>{request.responses} پاسخ</span>
+                          </div>
+                          <div className="flex items-center text-gray-500">
+                            <Calendar className="w-4 h-4 ml-1" />
+                            <span>{request.postedDate}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2 mt-4">
+                        <Button className="flex-1 bg-orange-600 hover:bg-orange-700 text-sm">
+                          ارسال پیشنهاد
+                        </Button>
+                        <Button variant="outline" className="flex-1 text-sm">
+                          مشاهده جزئیات
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
           </Tabs>
+        </div>
+
+        {/* Advertisement Section */}
+        <div className="bg-white rounded-lg shadow-sm border p-6 mt-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-900">
+              تامین‌کنندگان معتبر {currentService.name.replace("پخش ", "")}
+            </h3>
+            <Badge className="bg-orange-100 text-orange-800">
+              تبلیغات ویژه
+            </Badge>
+          </div>
+
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {advertisements
+                .filter((ad) =>
+                  currentService.id === "jewelry"
+                    ? ["طلا", "نقره"].includes(ad.category)
+                    : ad.category === "آرایشی",
+                )
+                .map((ad) => (
+                  <CarouselItem
+                    key={ad.id}
+                    className="md:basis-1/2 lg:basis-1/3"
+                  >
+                    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                      <div className="relative">
+                        <img
+                          src={ad.image}
+                          alt={ad.title}
+                          className="w-full h-48 object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4 text-white">
+                          <h4 className="font-bold text-lg mb-1">{ad.title}</h4>
+                          <p className="text-sm opacity-90 line-clamp-2">
+                            {ad.description}
+                          </p>
+                        </div>
+                      </div>
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="font-semibold text-gray-900">
+                            {ad.company}
+                          </span>
+                          <Badge variant="secondary" className="text-xs">
+                            {ad.category}
+                          </Badge>
+                        </div>
+                        <Button className="w-full bg-orange-600 hover:bg-orange-700">
+                          مشاهده محصولات
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-12" />
+            <CarouselNext className="-right-12" />
+          </Carousel>
         </div>
       </div>
     </div>

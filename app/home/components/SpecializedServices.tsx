@@ -11,7 +11,18 @@ import {
   Home,
   Stethoscope,
   ArrowRight,
+  Plus,
+  Send,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 
 interface Language {
@@ -49,6 +60,14 @@ const SpecializedServices = ({
     parentId: "fars",
   },
 }: SpecializedServicesProps) => {
+  const [isRequestServiceModalOpen, setIsRequestServiceModalOpen] =
+    React.useState(false);
+  const [newServiceRequest, setNewServiceRequest] = React.useState({
+    title: "",
+    supplierTypes: "",
+    buyerTypes: "",
+    description: "",
+  });
   const translations = {
     en: {
       title: "Specialized Services",
@@ -153,6 +172,17 @@ const SpecializedServices = ({
     return new Intl.NumberFormat("fa-IR").format(num);
   };
 
+  const handleServiceRequestSubmit = () => {
+    console.log("New service request:", newServiceRequest);
+    setIsRequestServiceModalOpen(false);
+    setNewServiceRequest({
+      title: "",
+      supplierTypes: "",
+      buyerTypes: "",
+      description: "",
+    });
+  };
+
   return (
     <section
       className={`py-16 bg-gradient-to-b from-white to-gray-50 ${currentLanguage.direction === "rtl" ? "rtl" : "ltr"}`}
@@ -231,15 +261,119 @@ const SpecializedServices = ({
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <Link href="/services">
-            <Button
-              variant="outline"
-              className="px-8 py-3 border-orange-600 text-orange-600 hover:bg-orange-50"
+        <div className="text-center mt-12 space-y-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link href="/services">
+              <Button
+                variant="outline"
+                className="px-8 py-3 border-orange-600 text-orange-600 hover:bg-orange-50"
+              >
+                مشاهده همه سرویس‌ها
+              </Button>
+            </Link>
+
+            <Dialog
+              open={isRequestServiceModalOpen}
+              onOpenChange={setIsRequestServiceModalOpen}
             >
-              مشاهده همه سرویس‌ها
-            </Button>
-          </Link>
+              <DialogTrigger asChild>
+                <Button className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white">
+                  <Plus className="w-4 h-4 ml-2" />
+                  درخواست سرویس تخصصی
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl" dir="rtl">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2">
+                    <Send className="w-5 h-5 text-green-500" />
+                    درخواست سرویس تخصصی جدید
+                  </DialogTitle>
+                  <p className="text-sm text-gray-600 mt-2">
+                    اگر به سرویس جدیدی نیاز دارید درخواست دهید تا به سرویس‌های
+                    تخصصی ما اضافه شود.
+                  </p>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">عنوان سرویس</label>
+                    <Input
+                      placeholder="نام سرویس مورد نظر خود را وارد کنید"
+                      value={newServiceRequest.title}
+                      onChange={(e) =>
+                        setNewServiceRequest({
+                          ...newServiceRequest,
+                          title: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">
+                      صنف‌های تامین‌کننده
+                    </label>
+                    <Input
+                      placeholder="مثال: تولیدکنندگان، واردکنندگان، پخش‌کنندگان"
+                      value={newServiceRequest.supplierTypes}
+                      onChange={(e) =>
+                        setNewServiceRequest({
+                          ...newServiceRequest,
+                          supplierTypes: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">
+                      صنف‌های خریدار
+                    </label>
+                    <Input
+                      placeholder="مثال: خرده‌فروشان، فروشگاه‌ها، نمایندگی‌ها"
+                      value={newServiceRequest.buyerTypes}
+                      onChange={(e) =>
+                        setNewServiceRequest({
+                          ...newServiceRequest,
+                          buyerTypes: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">توضیحات</label>
+                    <Textarea
+                      placeholder="توضیح کاملی از سرویس مورد نظر و نیاز بازار ارائه دهید..."
+                      rows={4}
+                      value={newServiceRequest.description}
+                      onChange={(e) =>
+                        setNewServiceRequest({
+                          ...newServiceRequest,
+                          description: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="flex gap-2 pt-4">
+                    <Button
+                      onClick={handleServiceRequestSubmit}
+                      className="flex-1 bg-green-600 hover:bg-green-700"
+                    >
+                      ارسال درخواست
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setIsRequestServiceModalOpen(false)}
+                      className="flex-1"
+                    >
+                      انصراف
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
       </div>
     </section>

@@ -10,6 +10,7 @@ import BuyingRequests from "@/app/home/components/BuyingRequests";
 import TrustSection from "@/app/home/components/TrustSection";
 import Marketers from "@/app/home/components/Marketers";
 import SpecializedServices from "@/app/home/components/SpecializedServices";
+import TransportationSection from "@/app/home/components/TransportationSection";
 import Link from "next/link";
 
 import {
@@ -96,6 +97,12 @@ export default function HomePage() {
 
       {/* Specialized Services Section */}
       <SpecializedServices currentLanguage={currentLanguage} />
+
+      {/* Transportation Section */}
+      <TransportationSection
+        currentLanguage={currentLanguage}
+        selectedLocation={selectedLocation}
+      />
 
       {/* VIP Sellers Section */}
       <VipSellers
