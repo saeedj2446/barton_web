@@ -265,7 +265,7 @@ export default function DriversPage() {
                 <SelectValue placeholder="انتخاب کشور" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">همه کشورها</SelectItem>
+                <SelectItem value="همه کشورها">همه کشورها</SelectItem>
                 <SelectItem value="ایران">ایران</SelectItem>
                 <SelectItem value="امارات">امارات متحده عربی</SelectItem>
                 <SelectItem value="ترکیه">ترکیه</SelectItem>
@@ -277,7 +277,7 @@ export default function DriversPage() {
                 <SelectValue placeholder="انتخاب استان" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">همه استان‌ها</SelectItem>
+                <SelectItem value="همه استان‌ها">همه استان‌ها</SelectItem>
                 <SelectItem value="فارس">فارس</SelectItem>
                 <SelectItem value="تهران">تهران</SelectItem>
                 <SelectItem value="اصفهان">اصفهان</SelectItem>
@@ -292,7 +292,7 @@ export default function DriversPage() {
                 <SelectValue placeholder="انتخاب شهر" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">همه شهرها</SelectItem>
+                <SelectItem value="همه شهرها">همه شهرها</SelectItem>
                 <SelectItem value="شیراز">شیراز</SelectItem>
                 <SelectItem value="تهران">تهران</SelectItem>
                 <SelectItem value="اصفهان">اصفهان</SelectItem>
@@ -310,7 +310,7 @@ export default function DriversPage() {
                 <SelectValue placeholder="نوع خودرو" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">همه انواع</SelectItem>
+                <SelectItem value="همه انواع">همه انواع</SelectItem>
                 <SelectItem value="وانت">وانت</SelectItem>
                 <SelectItem value="کامیونت">کامیونت</SelectItem>
                 <SelectItem value="کامیون">کامیون</SelectItem>
